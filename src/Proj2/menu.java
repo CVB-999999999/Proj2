@@ -74,8 +74,8 @@ public class menu {
             st.setString(3, this.descricao);
             st.setFloat(4, this.pCusto);
             st.setFloat(5, this.pVenda);
-            st.setDate(6, this.dAtualizacao);
-            st.setDate(7, this.nEncomendas);
+            st.setDate(6, (java.sql.Date) this.dAtualizacao);
+            st.setInt(7, this.nEncomendas);
 
             st.execute();
 
