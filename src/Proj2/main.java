@@ -1,5 +1,7 @@
 package Proj2;
 
+import javax.swing.*;
+
 public class main {
     public static void main(String[] args) {
         cliente c = new cliente();
@@ -15,7 +17,9 @@ public class main {
         c.setRua("99999999999");
 
         c.create();*/
-        c.read(65);
-        System.out.println(c.getIdCliente() + " " + c.getNome());
+      /*  c.read(65);
+        System.out.println(c.getIdCliente() + " " + c.getNome());*/
+
+        tabelaClientes tc = new tabelaClientes();
     }
 }
