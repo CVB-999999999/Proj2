@@ -14,26 +14,17 @@ public class tabelaClientes {
     private JTable table1;
     private JPanel panel1;
 
-    public tabelaClientes(){
+    public tabelaClientes() throws SQLException {
         List<cliente> lista = new ArrayList<>();
 
-        try {
-            lista = cliente.readAll();
-        }
-        catch(SQLException ex){
-            /*ERRO erro = new ERRO();
-            System.out.println(ex.getMessage());
-            erro.getMensagemErro().setText(ex.getMessage());
-            erro.setVisible(true);*/
-        }
+        lista = cliente.readAll();
         DefaultTableModel tmodel = (DefaultTableModel)table1.getModel();
 
         for(cliente cli : lista){
-            String [] linhaTabela = new String[4];
+            String [] linhaTabela = new String[3];
             linhaTabela[0] = String.valueOf(cli.getIdCliente());
             linhaTabela[1] = cli.getNome();
             linhaTabela[2] = cli.getTelemovel();
-            linhaTabela[3] = cli.getNif();
 
             tmodel.addRow(linhaTabela);
             //System.out.println(linhaTabela[0]);

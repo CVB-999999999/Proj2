@@ -152,13 +152,13 @@ public class cliente {
 
     /**
      * <h1> Ler todos os registos de clientes </h1>
-     *//*
-    public static List<Cliente> readAll(){
-        Connection conn = Util.criarConexao();
+     */
+    public static List<cliente> readAll(){
+        Connection conn = util.criarConexao();
 
         String sqlCommand = "SELECT IDCLIENTE, NOME, MORADA, CPOSTAL FROM CLIENTE1";
 
-        List<Cliente> lista = new ArrayList<>();
+        List<cliente> lista = new ArrayList<>();
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -167,14 +167,18 @@ public class cliente {
             ResultSet rs = st.executeQuery();
 
             while(rs.next()){
-                Cliente cli = new Cliente();
+                cliente cli = new cliente();
 
                 cli.setIdCliente(rs.getInt("IDCLIENTE"));
                 if (rs.getString("NOME") != null) cli.setNome(rs.getString("NOME"));
                 //
-                if (rs.getString("MORADA") != null) cli.setMorada(rs.getString("MORADA"));
+                if (rs.getString("CLIENTETELEMOVEL") != null) cli.setTelemovel(rs.getString("CLIENTETELEMOVEL"));
                 //
-                if (rs.getString("CPOSTAL") != null) cli.setCpostal(rs.getString("CPOSTAL"));
+                cli.setNif(rs.getInt("NIFCLIENTE"));
+                //
+                if (rs.getString("MORADA") != null) cli.setRua(rs.getString("MORADA"));
+                //
+                if (rs.getString("CPOSTAL") != null) cli.setCodPostal(rs.getString("CPOSTAL"));
 
                 lista.add(cli);
             }
