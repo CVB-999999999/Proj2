@@ -17,5 +17,7 @@ public class main {
         c.create();*/
         c.read(65);
         System.out.println(c.getIdCliente() + " " + c.getNome());
+
+        tabelaClientes tb = new tabelaClientes();
     }
 }
