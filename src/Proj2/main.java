@@ -20,6 +20,14 @@ public class main {
       /*  c.read(65);
         System.out.println(c.getIdCliente() + " " + c.getNome());*/
 
-        tabelaClientes tc = new tabelaClientes();
+        //tabelaClientes tc = new tabelaClientes();
+        login lg = new login();
+        lg.createLogin();
+
+        /*menuPrincipal mp = new menuPrincipal();
+        mp.createmenuPrincipal();*/
+
+        System.out.println("Exit");
+
     }
 }
