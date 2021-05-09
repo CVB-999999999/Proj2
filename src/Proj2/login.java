@@ -18,8 +18,6 @@ public class login {
     private JLabel erro;
     private int codigo = 0;
 
-    JFrame frame = new JFrame("login");
-
     public login() {
         funcionario f = new funcionario();
 
@@ -50,10 +48,6 @@ public class login {
                         erro.setForeground(Color.GREEN);
                         erro.setText("Sucesso");
 
-                        frame.setVisible(false);
-
-
-
                         menuPrincipal mp = new menuPrincipal();
                         mp.createmenuPrincipal();
 
@@ -64,15 +58,13 @@ public class login {
                 }
             }
         });
-
-        frame.setVisible(false);
     }
 
-    public void createLogin() {
-        JFrame.setDefaultLookAndFeelDecorated(false);
-        frame.setContentPane(new login().login);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+    public JPanel getLogin() {
+        return login;
+    }
+
+    public void setLogin(JPanel login) {
+        this.login = login;
     }
 }

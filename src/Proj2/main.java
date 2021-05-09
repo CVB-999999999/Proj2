@@ -22,12 +22,21 @@ public class main {
 
         //tabelaClientes tc = new tabelaClientes();
         login lg = new login();
-        lg.createLogin();
+        //lg.createLogin();
 
         /*menuPrincipal mp = new menuPrincipal();
         mp.createmenuPrincipal();*/
 
-        System.out.println("Exit");
+        //System.out.println("Exit");
+
+        JFrame frame = new JFrame("login");
+        JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setContentPane(lg.getLogin());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+
 
     }
 }
