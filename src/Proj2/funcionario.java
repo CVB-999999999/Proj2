@@ -10,6 +10,7 @@ public class funcionario {
     private String nome;
     private String funcao;
     private Date dataAdmissao;
+    private Boolean existeFunc;
 
     public funcionario(){}
 
@@ -52,7 +53,7 @@ public class funcionario {
     }
 
     /**
-     * <h1> Ler a BD Funcionari especifico</h1>
+     * <h1> Ler a BD Funcionario especifico</h1>
      */
     public void read(int idFunc){
         Connection conn = util.criarConexao();
@@ -72,14 +73,30 @@ public class funcionario {
                 if (rs.getString("funcionariosFuncao") != null) this.funcao = rs.getString("funcionariosFuncao");
                 else this.funcao = "";
                 if (rs.getDate("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getDate("funcionariosDataAdmissao");
+                existeFunc = Boolean.TRUE;
 
             }
             else{
                 System.out.println("ERRO: Não existe Funcionario com o ID definido ");
+                existeFunc = Boolean.FALSE;
             }
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
+            existeFunc = Boolean.FALSE;
         }
     }
+    public int login(int id, String pass) {
+        read(id);
 
+        if(!existeFunc) {
+            System.out.println("Ocorreu um erro");
+            return 1;
+
+        } else {
+            if(pass.compareTo("admin") == 0) {
+                return 2;
+            }
+        }
+        return 0;
+    }
 }

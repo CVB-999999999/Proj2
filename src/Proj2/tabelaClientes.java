@@ -9,6 +9,7 @@ import javax.swing.table.TableColumnModel;
 public class tabelaClientes {
 
     private JTable showTable;
+    private JPanel tc;
 
     public tabelaClientes(){
         createTable();
@@ -19,11 +20,12 @@ public class tabelaClientes {
     }
 
     private void createTable(){
-        cliente c = new cliente();
-        c.read(65);
+       /* cliente c = new cliente();
+        c.read(99999999);*/
 
         Object[][] data = {
-                {c.getIdCliente(), c.getNome(), c.getNif(), c.getTelemovel()}
+                //{c.getIdCliente(), c.getNome(), c.getNif(), c.getTelemovel()}
+                {9999, "9999", 9999, 9999}
         };
 
         showTable.setModel(new DefaultTableModel(
@@ -38,5 +40,12 @@ public class tabelaClientes {
         columns.getColumn(1).setCellRenderer(centerRender);
         columns.getColumn(2).setCellRenderer(centerRender);
         columns.getColumn(3).setCellRenderer(centerRender);
+
+        JFrame.setDefaultLookAndFeelDecorated(false);
+        JFrame frame = new JFrame("Tabela Clientes");
+        frame.setContentPane(new tabelaClientes().tc);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
