@@ -5,7 +5,5 @@ import java.util.Date;
 public class main {
     public static void main(String[] args) {
         login lg = new login();
-        //pedidos p = new pedidos();
-
     }
 }

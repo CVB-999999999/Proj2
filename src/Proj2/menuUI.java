@@ -3,28 +3,36 @@ package Proj2;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 public class menuUI {
     private JTable table1;
     private JButton voltarAoMenuButton;
+    private JPanel menusPratos;
 
     public menuUI() {
-        JFrame f = new JFrame();
+        JFrame frame = new JFrame();
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setContentPane(menusPratos);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
 
-        f.setTitle("Menus e Pratos");
-
+        DefaultTableModel model = new DefaultTableModel();
+        table1.setAutoCreateRowSorter(true);
+        table1.setFillsViewportHeight(true);
+        table1.setPreferredScrollableViewportSize(new Dimension(550, 200));
+        model.addColumn("Id Encomenda");
+        model.addColumn("Id Prato");
+        model.addColumn("Hora Pedido");
         String[][] data = encomendaCliente.readAll();
 
-        String[] columnNames = { "ID Encomenda", "ID Prato", "Hora do Pedido" };
-
-        table1 = new JTable(data, columnNames);
-        table1.setBounds(30, 40, 200, 300);
-
-
-        JScrollPane sp = new JScrollPane(table1);
-        f.add(sp);
-        f.setVisible(true);
+        int i=0;
+        for (i=0 ; i<data.length ; i++) {
+            model.addRow(data[i]);
+        }
+        table1.setModel(model);
 
         table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -35,7 +43,7 @@ public class menuUI {
                     String value = table1.getModel().getValueAt(table1.getSelectedRow(), 0).toString();
 
                     Object[] options = {"Sim", "Não"};
-                    int n = JOptionPane.showOptionDialog(f,
+                    int n = JOptionPane.showOptionDialog(frame,
                             "Prentende marcar o pedido nº " + value + " como concluido?",
                             "Marcar o pedido como concluido",
                             JOptionPane.YES_NO_OPTION,

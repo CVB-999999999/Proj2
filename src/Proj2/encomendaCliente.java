@@ -128,29 +128,44 @@ public class encomendaCliente {
     }
 
     /**
-     * <h1> Ler todos os registos de clientes </h1>
+     * <h1> Ler todos os registos de encomendas </h1>
      */
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT ENCOMENDASIDENCOMENDA, ENCOMENDASREFPRATO, ENCOMENDASDATAHORA FROM ENCOMENDAS";
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";
 
         String[][] encomenda = new String[0][];
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
 
+            //  Conta as linhas que vao resultar da query
+            PreparedStatement ts = conn.prepareStatement(count);
+            ResultSet ss = ts.executeQuery();
+            ss.next();
+            int n = ss.getInt("n");
 
+            n=100;
             ResultSet rs = st.executeQuery();
-            encomenda = new String[100][3];
+            encomenda = new String[n][6];
             int i = 0;
             while (rs.next()) {
 
-                encomenda[i][0] = (rs.getString("ENCOMENDASIDENCOMENDA"));
-                if (rs.getString("ENCOMENDASREFPRATO") != null)
-                    encomenda[i][1] = (rs.getString("ENCOMENDASREFPRATO"));
-                if (rs.getString("ENCOMENDASDATAHORA") != null)
-                    encomenda[i][2] = (rs.getString("ENCOMENDASDATAHORA"));
+                encomenda[i][0] = (rs.getString("idEncomenda"));
 
+                if (rs.getString("menu") != null) {
+                    encomenda[i][1] = (rs.getString("menu"));
+                }
+                if (rs.getString("quantidade") != null) {
+                    encomenda[i][2] = String.valueOf((rs.getInt("quantidade")));
+                }
+                if (rs.getString("datahora") != null) {
+                    encomenda[i][3] = (rs.getString("datahora"));
+                }
+                if (rs.getString("estado") != null) {
+                    encomenda[i][4] = (rs.getString("estado"));
+                }
                 i++;
             }
 
@@ -158,8 +173,34 @@ public class encomendaCliente {
             System.out.println("ERRO: " + ex.getMessage());
         }
 
-
         return encomenda;
+    }
+
+    /**
+     * <h1> Update estado do pedido</h1>
+     */
+
+    public static void updateEstado(String idEncomenda, int codFunc, int tipo) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) " +
+                "VALUES (?, ?, ?, ?)";
+
+        try {
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setDate(1, Date.valueOf(LocalDate.now()));
+            st1.setInt(2, Integer.parseInt(idEncomenda));
+            st1.setInt(3, tipo);
+            st1.setInt(4, codFunc);
+
+
+            st1.execute();
+            conn.commit();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
+        }
     }
 
     /**
