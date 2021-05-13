@@ -40,7 +40,8 @@ CREATE TABLE  menu  (
     menuPrecoPVP  number NOT NULL,
     menuDataAtualizacao  date DEFAULT NULL,
     menuDataCriacao  date NOT NULL,
-    menuNEncomendas number DEFAULT NULL,
+    menuNEncomendas number DEFAULT 0,
+    emUso number DEFAULT NULL,  /* Determina se o menu está á venda */
     PRIMARY KEY ( menuRefPrato )
 );
 
@@ -573,8 +574,11 @@ INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUE
                         Query's
 -----------------------------------------------------*/
 
-SELECT * FROM TIPOeSTADOS
+SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso IS NOT NULL
 
+SELECT * FROM TIPOeSTADOS
+SELECT * FROM MENU
+SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso IS NULL
 /*********************************************************************************
     QUERY PARA PROCURAR TODOS OS PEDIDOS DE UM DETERMINADO CLIENTE (HISTÓRICO)   
 **********************************************************************************/
@@ -612,6 +616,7 @@ WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncome
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4
 SELECT COUNT(*) FROM mostraDetalhes
 
+commit
 
 SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
 FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te

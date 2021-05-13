@@ -1,65 +1,25 @@
 package Proj2;
 
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class menu {
-    private int nMenu;
+public class ingredientes {
+    private int ref;
     private String nome;
-    private String descricao;
-    private float pCusto;
-    private float pVenda;
+    private int nfunc;
+    private int qtdAtual;
+    private float qtdMin;
     private Date dAtualizacao;
-    private Date dCriacao;
-    private int nEncomendas;
 
-    public menu() {
+    public ingredientes() {
     }
-
-    public int getnMenu() { return nMenu;  }
-
-    public void setnMenu(int nMenu) { this.nMenu = nMenu;   }
-
-    public String getNome() {  return nome;  }
-
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getDescricao() { return descricao; }
-
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public float getpCusto() {return pCusto;}
-
-    public void setpCusto(float pCusto) {this.pCusto = pCusto; }
-
-    public float getpVenda() {return pVenda;}
-
-    public void setpVenda(float pVenda) {this.pVenda = pVenda;}
-
-    public Date getdAtualizacao() {return dAtualizacao;}
-
-    public void setdAtualizacao(Date dAtualizacao) {this.dAtualizacao = dAtualizacao;}
-
-    public Date getdCriacao() { return dCriacao; }
-
-    public void setdCriacao(Date dCriacao) {this.dCriacao = dCriacao;}
-
-    public int getnEncomendas() { return nEncomendas; }
-
-    public void setnEncomendas(int nEncomendas) { this.nEncomendas = nEncomendas; }
-
 
     /**
      * <h1> Insert na BD </h1>
-     */
+     *//*
     public void create(){
         // PreparedStatement
         Connection conn = util.criarConexao();
@@ -82,11 +42,11 @@ public class menu {
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
-    }
+    }*/
 
     /**
      * <h1> Ler a BD </h1>
-     */
+     *//*
     public void read(int nMenu){
         Connection conn = util.criarConexao();
 
@@ -111,17 +71,19 @@ public class menu {
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
-    }
+    }*/
 
     /**
-     * <h1> Ler todos os registos de menus </h1>
+     * <h1> Ler todos os registos de ingredientes </h1>
+     *
+     * @return lista - 1 : Ref Produto - 2 : Nome Produto
      */
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
         String[][] lista = new String[0][4];
 
-        String sqlCommand = "SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso IS NULL";
-        String count = "SELECT COUNT(*) as n FROM Menu where EmUso IS NULL";
+        String sqlCommand = "SELECT materiaPrimaRefProduto, materiaPrimaNome FROM materiaPrima";
+        String count = "SELECT COUNT(*) as n FROM materiaPrima";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -131,22 +93,16 @@ public class menu {
             ss.next();
             int n = ss.getInt("n");
 
-            lista = new String[n][4];
+            lista = new String[n][2];
             ResultSet rs = st.executeQuery();
 
             int i = 0;
             while (rs.next()) {
 
-                lista[i][0] = (rs.getString("menuRefPrato"));
+                lista[i][0] = (rs.getString("materiaPrimaRefProduto"));
 
-                if (rs.getString("menuNome") != null) {
-                    lista[i][1] = (rs.getString("menuNome"));
-                }
-                if (rs.getString("menuDescricao") != null) {
-                    lista[i][3] = (rs.getString("menuDescricao"));
-                }
-                if (rs.getString("menuPrecoPVP") != null) {
-                    lista[i][2] = (rs.getString("menuPrecoPVP"));
+                if (rs.getString("materiaPrimaNome") != null) {
+                    lista[i][1] = (rs.getString("materiaPrimaNome"));
                 }
                 i++;
             }
