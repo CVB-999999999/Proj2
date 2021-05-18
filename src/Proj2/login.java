@@ -19,6 +19,13 @@ public class login {
     private int codigo = 0;
 
     public login() {
+        JFrame frame = new JFrame("login");
+        JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setContentPane(login);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
         funcionario f = new funcionario();
 
         cancelarButton.addActionListener(new ActionListener() {
@@ -30,7 +37,6 @@ public class login {
         iniciarSessãoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Login.setText("OKOKOK");
 
                 String pass = new String(passwordField1.getPassword());
                 int id = Integer.parseInt(textField1.getText());
@@ -49,7 +55,8 @@ public class login {
                         erro.setText("Sucesso");
 
                         menuPrincipal mp = new menuPrincipal();
-                        mp.createmenuPrincipal();
+                        frame.setVisible(false);
+                        frame.dispose();
 
                         break;
                     }
@@ -58,13 +65,4 @@ public class login {
                 }
             }
         });
-    }
-
-    public JPanel getLogin() {
-        return login;
-    }
-
-    public void setLogin(JPanel login) {
-        this.login = login;
-    }
-}
+    }}

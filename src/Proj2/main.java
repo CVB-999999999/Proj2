@@ -1,42 +1,9 @@
 package Proj2;
 
-import javax.swing.*;
+import java.util.Date;
 
 public class main {
     public static void main(String[] args) {
-        cliente c = new cliente();
-
-       /* c.setCodPostal("99999999999");
-        c.setEmail("99999999999");
-        c.setPass("99999999999");
-        c.setIdCliente(99999999);
-        c.setNif(999999);
-        c.setNome("99999999999");
-        c.setPass("99999999999");
-        c.setTelemovel("99999999999");
-        c.setRua("99999999999");
-
-        c.create();*/
-      /*  c.read(65);
-        System.out.println(c.getIdCliente() + " " + c.getNome());*/
-
-        //tabelaClientes tc = new tabelaClientes();
         login lg = new login();
-        //lg.createLogin();
-
-        /*menuPrincipal mp = new menuPrincipal();
-        mp.createmenuPrincipal();*/
-
-        //System.out.println("Exit");
-
-        JFrame frame = new JFrame("login");
-        JFrame.setDefaultLookAndFeelDecorated(false);
-        frame.setContentPane(lg.getLogin());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-
-
-
     }
 }
