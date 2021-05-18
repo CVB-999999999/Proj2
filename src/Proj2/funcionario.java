@@ -9,7 +9,7 @@ public class funcionario {
     private int idFunc;
     private String nome;
     private String funcao;
-    private Date dataAdmissao;
+    private long dataAdmissao;
     private Boolean existeFunc;
 
     public funcionario(){}
@@ -26,9 +26,9 @@ public class funcionario {
 
     public void setFuncao(String funcao) {this.funcao = funcao;}
 
-    public Date getDataAdmissao() {return dataAdmissao;}
+    public long getDataAdmissao() {return dataAdmissao;}
 
-    public void setDataAdmissao(Date dataAdmissao) {this.dataAdmissao = dataAdmissao;}
+    public void setDataAdmissao(long dataAdmissao) {this.dataAdmissao = dataAdmissao;}
 
     /**
      * <h1> Insert na BD </h1>
@@ -72,7 +72,7 @@ public class funcionario {
                 else this.nome = "";
                 if (rs.getString("funcionariosFuncao") != null) this.funcao = rs.getString("funcionariosFuncao");
                 else this.funcao = "";
-                if (rs.getDate("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getDate("funcionariosDataAdmissao");
+                if (rs.getString("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getLong("funcionariosDataAdmissao");
                 existeFunc = Boolean.TRUE;
 
             }
@@ -85,6 +85,55 @@ public class funcionario {
             existeFunc = Boolean.FALSE;
         }
     }
+
+    /**
+     * <h1> Ler todos os registos de funcionarios </h1>
+     */
+    public static String[][] readAll() {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "SELECT * FROM funcionarios";
+        String count = "SELECT COUNT(*) as n FROM funcionarios";
+
+        String[][] funcionario = new String[0][];
+        try {
+            PreparedStatement st = conn.prepareStatement(sqlCommand);
+
+            //  Conta as linhas que vao resultar da query
+            PreparedStatement ts = conn.prepareStatement(count);
+            ResultSet ss = ts.executeQuery();
+            ss.next();
+            int n = ss.getInt("n");
+
+            n=100;
+            ResultSet rs = st.executeQuery();
+            funcionario = new String[n][4];
+            int i = 0;
+            while (rs.next()) {
+
+
+                funcionario[i][0] = (rs.getString("funcionariosCodFuncionario"));
+
+                if (rs.getString("funcionariosNome") != null) {
+                    funcionario[i][1] = (rs.getString("funcionariosNome"));
+                }
+                if (rs.getString("funcionariosFuncao") != null) {
+                    funcionario[i][2] = String.valueOf((rs.getInt("funcionariosFuncao")));
+                }
+                if (rs.getString("funcionariosDataAdmissao") != null) {
+                    funcionario[i][3] = rs.getString("funcionariosDataAdmissao");
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO: " + ex.getMessage());
+        }
+
+        return funcionario;
+    }
+
+
     public int login(int id, String pass) {
         read(id);
 

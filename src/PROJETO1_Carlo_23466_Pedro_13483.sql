@@ -574,6 +574,8 @@ INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUE
 /*---------------------------------------------------
                         Query's
 -----------------------------------------------------*/
+SELECT * FROM cliente
+
 
 SELECT m.menuRefPrato as idPrato, m.menuNome as nomePrato, mp.materiaPrimaRefProduto as idProduto, mp.materiaPrimaNome as nomeProduto
 FROM menuMateriais mm, materiaPrima mp, menu m

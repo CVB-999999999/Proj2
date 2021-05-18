@@ -5,6 +5,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class funcUI {
     private JTable table1;
@@ -24,10 +26,11 @@ public class funcUI {
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
         table1.setPreferredScrollableViewportSize(new Dimension(550, 200));
-        model.addColumn("Id Encomenda");
-        model.addColumn("Id Prato");
-        model.addColumn("Hora Pedido");
-        String[][] data = encomendaCliente.readAll();
+        model.addColumn("Número");
+        model.addColumn("Nome");
+        model.addColumn("Posto de Trabalho");
+        model.addColumn("Data de Admissão");
+        String[][] data = funcionario.readAll();
 
         int i=0;
         for (i=0 ; i<data.length ; i++) {
@@ -35,7 +38,15 @@ public class funcUI {
         }
         table1.setModel(model);
 
-        table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        voltarAoMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
+
+        /*table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
@@ -58,6 +69,6 @@ public class funcUI {
                     }
                 }
             }
-        });
+        });*/
     }
 }
