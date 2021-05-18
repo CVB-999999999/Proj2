@@ -1,92 +1,63 @@
 package Proj2;
 
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class cliente {
-    private int idCliente;
-    private String nome;
-    private String telemovel;
-    private int nif;
-    private String rua;
-    private String email;
-    private String codPostal;
-    private String pass;
+public class encomendaCliente {
+    private int refPrato;
+    private String nomePrato;
+    private int idEncomenda;
+    private long dataEncomenda;
+    private String estado;
+
 
     // Contrutor
-    public cliente() {
+    public encomendaCliente() {
     }
 
-    // Getters e Setters
-    public int getIdCliente() {
-        return idCliente;
+    public int getRefPrato() {
+        return refPrato;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setRefPrato(int refPrato) {
+        this.refPrato = refPrato;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomePrato() {
+        return nomePrato;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomePrato(String nomePrato) {
+        this.nomePrato = nomePrato;
     }
 
-    public String getTelemovel() {
-        return telemovel;
+    public int getIdEncomenda() {
+        return idEncomenda;
     }
 
-    public void setTelemovel(String telemovel) {
-        this.telemovel = telemovel;
+    public void setIdEncomenda(int idEncomenda) {
+        this.idEncomenda = idEncomenda;
     }
 
-    public int getNif() {
-        return nif;
+    public long getDataEncomenda() {
+        return dataEncomenda;
     }
 
-    public void setNif(int nif) {
-        this.nif = nif;
+    public void setDataEncomenda(long dataEncomenda) {
+        this.dataEncomenda = dataEncomenda;
     }
 
-    public String getRua() {
-        return rua;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCodPostal() {
-        return codPostal;
-    }
-
-    public void setCodPostal(String codPostal) {
-        this.codPostal = codPostal;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     /**
@@ -96,22 +67,28 @@ public class cliente {
         // PreparedStatement
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "INSERT INTO CLIENTE COLUMNS(clienteNCliente, clienteNome, clienteEmail, clienteTelemovel," +
-                "clienteEnderecoLinha1, clienteEnderecoLinha2, clienteCidade, clienteCodigoPostal, clientePass) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlCommand1 = "INSERT INTO ENCOMENDAS COLUMNS(encomendasIDEncomenda, encomendasRefPrato, encomendasNCliente, encomendasDataHora," +
+                "encomendasMetodoPagamento, encomendasConfirmarRecebido) VALUES(?, ?, ?, ?, ?, ?)";
+        String sqlCommand2 = "INSERT INTO DETALHEENCOMENDA COLUMNS(DETALHEENCOMENDAREFPRATO, DETALHEENCOMENDAIDENCOMENDA, DETALHEENCOMENDAPRECO, DETALHEENCOMENDAQUANTIDADE) VALUES(?, ?, ?, ?)";
 
         try {
-            PreparedStatement st = conn.prepareStatement(sqlCommand);
-            st.setInt(1, this.idCliente);
-            st.setString(2, this.nome);
-            st.setString(3, this.email);
-            st.setString(4, this.telemovel);
-            st.setString(5, this.rua);
-            st.setString(6, this.rua);
-            st.setString(7, this.rua);
-            st.setString(8, this.codPostal);
-            st.setString(9, this.pass);
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand1);
+            PreparedStatement st2 = conn.prepareStatement(sqlCommand2);
+            st1.setInt(1, this.idEncomenda);
+            st1.setInt(2, this.refPrato);
+            st1.setInt(3, 1234234);
+            st1.setDate(4, Date.valueOf(LocalDate.now()));
+            st1.setString(5, "mbway");
+            st1.setString(6, "true");
 
-            st.execute();
+            st2.setInt(1, this.refPrato);
+            st2.setInt(2, this.idEncomenda);
+            st2.setInt(3, 1);
+            st2.setInt(4, 1);
+
+            st1.execute();
+            st2.execute();
+
 
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
@@ -120,7 +97,7 @@ public class cliente {
 
     /**
      * <h1> Ler a BD </h1>
-     */
+     *//*
     public void read(int idCliente1){
         Connection conn = util.criarConexao();
 
@@ -151,15 +128,15 @@ public class cliente {
     }
 
     /**
-     * <h1> Ler todos os registos de clientes </h1>
+     * <h1> Ler todos os registos de encomendas </h1>
      */
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT clienteNCliente, clienteNome, clienteEmail, clienteTelemovel FROM cliente";
-        String count = "SELECT COUNT(*) as n FROM cliente";
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";
 
-        String[][] cliente = new String[0][];
+        String[][] encomenda = new String[0][];
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
 
@@ -171,21 +148,23 @@ public class cliente {
 
             n=100;
             ResultSet rs = st.executeQuery();
-            cliente = new String[n][4];
+            encomenda = new String[n][6];
             int i = 0;
             while (rs.next()) {
 
+                encomenda[i][0] = (rs.getString("idEncomenda"));
 
-                cliente[i][0] = (rs.getString("clienteNCliente"));
-
-                if (rs.getString("clienteNome") != null) {
-                    cliente[i][1] = (rs.getString("clienteNome"));
+                if (rs.getString("menu") != null) {
+                    encomenda[i][1] = (rs.getString("menu"));
                 }
-                if (rs.getString("clienteEmail") != null) {
-                    cliente[i][2] = String.valueOf((rs.getInt("clienteEmail")));
+                if (rs.getString("quantidade") != null) {
+                    encomenda[i][2] = String.valueOf((rs.getInt("quantidade")));
                 }
-                if (rs.getString("clienteTelemovel") != null) {
-                    cliente[i][3] = (rs.getString("clienteTelemovel"));
+                if (rs.getString("datahora") != null) {
+                    encomenda[i][3] = (rs.getString("datahora"));
+                }
+                if (rs.getString("estado") != null) {
+                    encomenda[i][4] = (rs.getString("estado"));
                 }
                 i++;
             }
@@ -194,41 +173,35 @@ public class cliente {
             System.out.println("ERRO: " + ex.getMessage());
         }
 
-        return cliente;
+        return encomenda;
     }
-    /*
-    public static List<Cliente> readAll(){
-        Connection conn = Util.criarConexao();
 
-        String sqlCommand = "";
+    /**
+     * <h1> Update estado do pedido</h1>
+     */
 
-        List<Cliente> lista = new ArrayList<>();
+    public static void updateEstado(String idEncomenda, int codFunc, int tipo) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) " +
+                "VALUES (?, ?, ?, ?)";
 
         try {
-            PreparedStatement st = conn.prepareStatement(sqlCommand);
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setDate(1, Date.valueOf(LocalDate.now()));
+            st1.setInt(2, Integer.parseInt(idEncomenda));
+            st1.setInt(3, tipo);
+            st1.setInt(4, codFunc);
 
 
-            ResultSet rs = st.executeQuery();
-
-            while(rs.next()){
-                Cliente cli = new Cliente();
-
-                cli.setIdCliente(rs.getInt("clienteNCliente"));
-                if (rs.getString("clienteNome") != null) cli.setNome(rs.getString("clienteNome"));
-                //
-                if (rs.getString("clienteEmail") != null) cli.setEmail(rs.getString("clienteEmail"));
-                //
-                if (rs.getString("clienteTelemovel") != null) cli.setTelemovel(rs.getString("clienteTelemovel"));
-
-                lista.add(cli);
-            }
+            st1.execute();
+            conn.commit();
 
         } catch (SQLException ex) {
-            System.out.println("ERRO: " + ex.getMessage());
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
         }
-
-        return lista;
-    }*/
+    }
 
     /**
      * <h1> Ler todos os registos de clientes parecidos com x </h1>

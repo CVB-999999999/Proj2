@@ -27,7 +27,7 @@ public class util {
             try {
                 conn = DriverManager.getConnection(
                         "jdbc:oracle:thin:@localhost:1521:XE", "projeto", "projeto");
-                //conn.setAutoCommit(false);
+                conn.setAutoCommit(false);
             } catch (Exception e) {
                 System.out.println("ERRO " + e.getMessage());
                 //javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(),"ERRO", javax.swing.JOptionPane.ERROR_MESSAGE);
