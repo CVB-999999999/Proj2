@@ -47,7 +47,8 @@ public class menuPrincipal {
         });
         funcionariosButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { funcUI func = new funcUI(); }
+            public void actionPerformed(ActionEvent e) { 
+                funcUI func = new funcUI(); }
         });
 
         clientesButton.addActionListener(new ActionListener() {

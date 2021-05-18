@@ -331,6 +331,7 @@
     </table>
     <table id="96" parent="30" name="TIPOESTADOS">
       <ObjectId>87763</ObjectId>
+      <Outdated>1</Outdated>
       <CreatedTimestamp>2021-03-09.14:57:13</CreatedTimestamp>
       <ModifiedTimestamp>2021-03-09.14:57:13</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>

@@ -40,7 +40,8 @@ CREATE TABLE  menu  (
     menuPrecoPVP  number NOT NULL,
     menuDataAtualizacao  date DEFAULT NULL,
     menuDataCriacao  date NOT NULL,
-    menuNEncomendas number DEFAULT NULL,
+    menuNEncomendas number DEFAULT 0,
+    emUso number DEFAULT NULL,  /* Determina se o menu está á venda */
     PRIMARY KEY ( menuRefPrato )
 );
 
@@ -86,7 +87,7 @@ CREATE TABLE  fornecedores  (
 CREATE TABLE  diversosEstados  (
     diversosEstadosIDEstado number NOT NULL, 
     diversosEstadosNome varchar2(50) NOT NULL, 
-    diversosEstadosDescricao varchar2(1000) NOT NULL,             
+    diversosEstadosDescricao varchar2(1000),             
     PRIMARY KEY ( diversosEstadosIDEstado )
 );
 
@@ -98,18 +99,7 @@ CREATE TABLE  encomendaFornecedores  (
     encomendaFornecedoresData  date NOT NULL,
     encomendaFornecedoresCaminhoFaturaPC  varchar2(3000) NOT NULL,
     PRIMARY KEY ( encomendaFornecedoresCodFatura ),
-    CONSTRAINT encomendaFornecedores_2  FOREIGN KEY ( encomendaFornecedoresCodFuncionario ) REFERENCES  funcionarios  ( funcionariosCodFuncionario ),
     CONSTRAINT encomendaFornecedores_1  FOREIGN KEY ( encomendaFornecedoresCodFornecedor ) REFERENCES  fornecedores  ( fornecedoresCodFornecedor )
-);
-
-/* Cria a TABELA DETALHE ENCOMENDA */
-CREATE TABLE  detalheEncomenda  (
-    detalheEncomendaRefPrato number NOT NULL, 
-    detalheEncomendaIDEncomenda number NOT NULL, 
-    detalheEncomendaPreco  number NOT NULL,
-    detalheEncomendaQuantidade number NOT NULL, 
-    PRIMARY KEY ( detalheEncomendaRefPrato,  detalheEncomendaIDEncomenda),
-    CONSTRAINT detalheEncomenda_1  FOREIGN KEY ( detalheEncomendaRefPrato ) REFERENCES  menu  ( menuRefPrato )
 );
 
 /* Cria a TABELA ENCOMENDAS */
@@ -121,17 +111,27 @@ CREATE TABLE  encomendas  (
     encomendasMetodoPagamento  varchar2(100) NOT NULL,
     encomendasConfirmarRecebido  varchar2(10) NOT NULL,
     PRIMARY KEY ( encomendasIDEncomenda ),
-    CONSTRAINT encomendas_2  FOREIGN KEY ( encomendasNCliente ) REFERENCES  cliente  ( clienteNCliente )
+    CONSTRAINT encomendas_2 FOREIGN KEY ( encomendasNCliente ) REFERENCES cliente ( clienteNCliente )
+);
+
+/* Cria a TABELA DETALHE ENCOMENDA */
+CREATE TABLE  detalheEncomenda  (
+    detalheEncomendaRefPrato number NOT NULL, 
+    detalheEncomendaIDEncomenda number NOT NULL, 
+    detalheEncomendaPreco  number NOT NULL,
+    detalheEncomendaQuantidade number NOT NULL, 
+    PRIMARY KEY ( detalheEncomendaRefPrato,  detalheEncomendaIDEncomenda),
+    CONSTRAINT detalheEncomenda_1  FOREIGN KEY ( detalheEncomendaRefPrato ) REFERENCES  menu  ( menuRefPrato ),
+    CONSTRAINT detalheEncomenda_2  FOREIGN KEY ( detalheEncomendaIDEncomenda ) REFERENCES  encomendas  ( encomendasIDEncomenda )
 );
 
 /* Cria a TABELA TIPOS ESTADOS */
 CREATE TABLE  tipoEstados  (
-    tipoEstadosIDEstado number NOT NULL, 
+    tipoEstadosIDEstado number GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1), 
     tipoEstadosDataHora  date NOT NULL,
-    tipoEstadosIDEncomenda number NOT NULL, 
-    tipoEstadosNomeEstado  varchar2(50) NOT NULL,
+    tipoEstadosIDEncomenda number NOT NULL,
     tipoEstadosCodFuncionario number NOT NULL,
-    tipoEstadosIDEstadoDiverso number /*NOT NULL*/,  /* ««««««««««««««------------------------------------------------------------------------------------------------------------------------------------------*/
+    tipoEstadosIDEstadoDiverso number NOT NULL,
     PRIMARY KEY ( tipoEstadosIDEstado),
     CONSTRAINT tipoEstados_1  FOREIGN KEY ( tipoEstadosIDEncomenda ) REFERENCES  encomendas  ( encomendasIDEncomenda ),
     CONSTRAINT tipoEstados_2  FOREIGN KEY ( tipoEstadosCodFuncionario ) REFERENCES  funcionarios  ( funcionariosCodFuncionario ),
@@ -463,36 +463,36 @@ INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNClie
 /*************************************************
     INSERE NA TABELA TIPOSESTADOS
 *************************************************/
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (1,to_date( '06/07/2020','dd/mm/yyyy' ), 1,'Aguardar Aprovação',2);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (2,to_date( '12/09/2020','dd/mm/yyyy' ),1,'Em confecção',5);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (3,to_date( '01/06/2020','dd/mm/yyyy' ),16,'Aguardar Aprovação',2);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (4,to_date( '02/11/2020','dd/mm/yyyy' ),13,'Em confecção',10);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (5,to_date( '22/07/2020','dd/mm/yyyy' ),18,'Em confecção',6);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (6,to_date( '20/10/2020','dd/mm/yyyy' ),14,'Em confecção',4);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (7,to_date( '18/11/2020','dd/mm/yyyy' ),6,'Em confecção',5);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (8,to_date( '21/08/2020','dd/mm/yyyy' ),2,'Aguardar Aprovação',5);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (9,to_date( '08/12/2020','dd/mm/yyyy' ),14,'Entregue/Finalizado',6);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (10,to_date( '01/09/2020','dd/mm/yyyy' ),7,'Entregue/Finalizado',3);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (11,to_date( '30/10/2020','dd/mm/yyyy' ),17,'Aguardar Aprovação',3);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (12,to_date( '02/08/2020','dd/mm/yyyy' ),15,'Aguardar Aprovação',9);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (13,to_date( '31/10/2020','dd/mm/yyyy' ),6,'Entregue/Finalizado',2);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (14,to_date( '03/12/2020','dd/mm/yyyy' ),5,'Entregue/Finalizado',4);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (15,to_date( '16/11/2020','dd/mm/yyyy' ),1,'Entregue/Finalizado',7);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (16,to_date( '22/09/2020','dd/mm/yyyy' ),9,'Aguardar Aprovação',4);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (17,to_date( '18/10/2020','dd/mm/yyyy' ),20,'Entregue/Finalizado',5);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (18,to_date( '09/10/2020','dd/mm/yyyy' ),12,'Entregue/Finalizado',7);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (19,to_date( '09/06/2020','dd/mm/yyyy' ),6,'Aguardar Aprovação',9);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (20,to_date( '12/07/2020','dd/mm/yyyy' ),18,'Entregue/Finalizado',3);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (21,to_date( '22/09/2020','dd/mm/yyyy' ),6,'Entregue/Finalizado',2);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (22,to_date( '25/06/2020','dd/mm/yyyy' ),14,'Em confecção',6);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (23,to_date( '22/09/2020','dd/mm/yyyy' ),17,'Entregue/Finalizado',3);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (24,to_date( '04/10/2020','dd/mm/yyyy' ),19,'Em confecção',4);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (25,to_date( '20/08/2020','dd/mm/yyyy' ),20,'Entregue/Finalizado',5);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (26,to_date( '09/10/2020','dd/mm/yyyy' ),14,'Em confecção',3);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (27,to_date( '30/07/2020','dd/mm/yyyy' ),10,'Em confecção',2);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (28,to_date( '18/11/2020','dd/mm/yyyy' ),8,'Aguardar Aprovação',7);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (29,to_date( '01/10/2020','dd/mm/yyyy' ),19,'Em confecção',6);
-INSERT INTO tipoEstados (tipoEstadosIDEstado,tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosNomeEstado,tipoEstadosCodFuncionario) VALUES (30,to_date( '16/11/2020','dd/mm/yyyy' ),2,'Aguardar Aprovação',4);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '06/07/2020','dd/mm/yyyy' ), 1,1,2);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '12/09/2020','dd/mm/yyyy' ),1,3,5);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '01/06/2020','dd/mm/yyyy' ),16,1,2);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '02/11/2020','dd/mm/yyyy' ),13,3,10);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '22/07/2020','dd/mm/yyyy' ),18,3,6);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '20/10/2020','dd/mm/yyyy' ),14,3,4);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '18/11/2020','dd/mm/yyyy' ),6,3,5);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '21/08/2020','dd/mm/yyyy' ),2,3,5);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '08/12/2020','dd/mm/yyyy' ),14,5,6);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '01/09/2020','dd/mm/yyyy' ),7,5,3);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '30/10/2020','dd/mm/yyyy' ),17,1,3);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '02/08/2020','dd/mm/yyyy' ),15,1,9);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '31/10/2020','dd/mm/yyyy' ),6,5,2);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '03/12/2020','dd/mm/yyyy' ),5,5,4);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '16/11/2020','dd/mm/yyyy' ),1,5,7);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '22/09/2020','dd/mm/yyyy' ),9,1,4);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '18/10/2020','dd/mm/yyyy' ),20,5,5);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '09/10/2020','dd/mm/yyyy' ),12,5,7);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '09/06/2020','dd/mm/yyyy' ),6,1,9);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '12/07/2020','dd/mm/yyyy' ),18,5,3);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '22/09/2020','dd/mm/yyyy' ),6,5,2);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '25/06/2020','dd/mm/yyyy' ),14,3,6);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '22/09/2020','dd/mm/yyyy' ),17,5,3);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '04/10/2020','dd/mm/yyyy' ),19,3,4);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '20/08/2020','dd/mm/yyyy' ),20,5,5);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '09/10/2020','dd/mm/yyyy' ),14,3,3);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '30/07/2020','dd/mm/yyyy' ),10,3,2);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '18/11/2020','dd/mm/yyyy' ),8,1,7);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '01/10/2020','dd/mm/yyyy' ),19,3,6);
+INSERT INTO tipoEstados (tipoEstadosDataHora,tipoEstadosIDEncomenda,tipoEstadosIDEstadoDiverso,tipoEstadosCodFuncionario) VALUES (to_date( '16/11/2020','dd/mm/yyyy' ),2,1,4);
 
 /*************************************************
     INSERE NA TABELA MATERIAPRIMA
@@ -561,10 +561,24 @@ INSERT INTO detalheEncomendaFornecedor (detalheEncomendaFornecedorID,detalheEnco
 INSERT INTO detalheEncomendaFornecedor (detalheEncomendaFornecedorID,detalheEncomendaFornecedorCodFatura,detalheEncomendaFornecedorRefProduto,detalheEncomendaFornecedorQuantidade) VALUES (26,30,4,12);
 INSERT INTO detalheEncomendaFornecedor (detalheEncomendaFornecedorID,detalheEncomendaFornecedorCodFatura,detalheEncomendaFornecedorRefProduto,detalheEncomendaFornecedorQuantidade) VALUES (48,2,6,11);
 
+/*************************************************
+    INSERE NA TABELA DIVERSOSESTADOS
+*************************************************/
+INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUES (1, 'Pendente');
+INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUES (2, 'Confirmado');
+INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUES (3, 'Em preparação');
+INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUES (4, 'Em Entrega');
+INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUES (5, 'Entregue');
+
 /*---------------------------------------------------
                         Query's
 -----------------------------------------------------*/
 
+SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso IS NOT NULL
+
+SELECT * FROM TIPOeSTADOS
+SELECT * FROM MENU
+SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso IS NULL
 /*********************************************************************************
     QUERY PARA PROCURAR TODOS OS PEDIDOS DE UM DETERMINADO CLIENTE (HISTÓRICO)   
 **********************************************************************************/
@@ -594,9 +608,16 @@ DROP VIEW mostraDetalhes*/
 
 /* CRIAR A VIEW */
 CREATE VIEW mostraDetalhes AS
-SELECT menuNome, detalheEncomendaPreco, detalheEncomendaQuantidade, detalheEncomendaIDEncomenda
-FROM detalheEncomenda, menu
-WHERE detalheEncomendaRefPrato=menuRefPrato
 
+SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
+FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
+WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
 /*  SELECIONAR DETALHES */
-SELECT * FROM mostraDetalhes WHERE detalheEncomendaIDEncomenda=15
+SELECT * FROM mostraDetalhes WHERE idEncomenda=4
+SELECT COUNT(*) FROM mostraDetalhes
+
+commit
+
+SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
+FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
+WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4

@@ -31,9 +31,9 @@
               <horizontalTextPosition value="11"/>
               <icon value="assets/ve-logo-40x40.png"/>
               <iconTextGap value="10"/>
-              <maximumSize width="200" height="50"/>
-              <minimumSize width="200" height="50"/>
-              <preferredSize width="200" height="50"/>
+              <maximumSize width="200" height="40"/>
+              <minimumSize width="200" height="40"/>
+              <preferredSize width="200" height="40"/>
               <text value="Menu Principal"/>
             </properties>
           </component>

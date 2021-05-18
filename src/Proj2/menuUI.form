@@ -1,29 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Proj2.menuUI">
   <grid id="27dc6" binding="menusPratos" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="800" height="600"/>
     </constraints>
-    <properties/>
+    <properties>
+      <minimumSize width="800" height="600"/>
+      <preferredSize width="800" height="600"/>
+    </properties>
     <border type="none"/>
     <children>
-      <toolbar id="504c6">
+      <toolbar id="504c6" binding="toolBar">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="20"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <floatable value="false"/>
+          <opaque value="false"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="d65b3" class="javax.swing.JLabel">
             <constraints/>
             <properties>
+              <font size="22"/>
+              <icon value="assets/ve-logo-40x40.png"/>
+              <iconTextGap value="10"/>
+              <maximumSize width="250" height="40"/>
+              <minimumSize width="250" height="40"/>
+              <preferredSize width="250" height="40"/>
               <text value="Menus e Pratos"/>
             </properties>
           </component>
           <hspacer id="f2386">
+            <constraints/>
+          </hspacer>
+          <component id="9efc9" class="javax.swing.JButton" binding="adicionarPratoButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Adicionar Prato"/>
+            </properties>
+          </component>
+          <hspacer id="3a301">
+            <constraints/>
+          </hspacer>
+          <hspacer id="96b12">
+            <constraints/>
+          </hspacer>
+          <hspacer id="18bc9">
             <constraints/>
           </hspacer>
           <component id="54d18" class="javax.swing.JButton" binding="voltarAoMenuButton" default-binding="true">
@@ -34,14 +61,21 @@
           </component>
         </children>
       </toolbar>
-      <component id="7b9c5" class="javax.swing.JTable" binding="table1" default-binding="true">
+      <scrollpane id="4c1c8">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="653f0" class="javax.swing.JTable" binding="table1" default-binding="true">
+            <constraints/>
+            <properties>
+              <preferredSize width="800" height="600"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>
