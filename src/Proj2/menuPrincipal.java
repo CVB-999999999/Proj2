@@ -14,6 +14,7 @@ public class menuPrincipal {
     private JButton menusEPratosButton;
     private JButton terminarSessãoButton;
     private JButton pedidosButton;
+    private JButton clientesButton;
 
     JFrame frame = new JFrame("Menu Principal");
 
@@ -46,9 +47,13 @@ public class menuPrincipal {
         });
         funcionariosButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                funcUI func = new funcUI();
-            }
+            public void actionPerformed(ActionEvent e) { 
+                funcUI func = new funcUI(); }
+        });
+
+        clientesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { clienteLista cliente = new clienteLista(); }
         });
         menusEPratosButton.addActionListener(new ActionListener() {
             @Override
