@@ -244,7 +244,7 @@ INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,c
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (51,'Samuel','laoreet.libero.et@aliquetvelvulputate.co.uk','16260521 9175','P.O. Box 404, 2438 Ipsum Rd.','Ap #461-3423 Vivamus St.','Bahawalnagar','08854','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (52,'Byron','sed@nunc.org','16350105 0599','768-8228 Nonummy Road','P.O. Box 757, 7079 Eget Rd.','Regina','60194','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (53,'Evelyn','nunc.est.mollis@Aliquamrutrumlorem.co.uk','16100119 9296','Ap #232-8057 Scelerisque Street','187-2642 Neque St.','Hofheim am Taunus','11778','PASSWORD');
-INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (54,'Adara','Donec.felis.orci@ornarelectusjusto.ca','16620128 1273','157-5929 Pede. St.','Ap #458-3671 Nullam Ave','Los √Ålamos','28292','PASSWORD');
+INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (54,'Adara','Donec.felis.orci@ornarelectusjusto.ca','16620128 1273','157-5929 Pede. St.','Ap #458-3671 Nullam Ave','Los √?lamos','28292','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (55,'Russell','a@pedenonummyut.co.uk','16060226 9557','Ap #361-9255 Id Rd.','265-8822 Sed Road','Kakisa','31019','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (56,'Kristen','Nunc.mauris@faucibusMorbivehicula.org','16721120 5179','960-327 Justo Rd.','Ap #310-1695 Ut, St.','Istres','89552','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (57,'Camden','ac.sem@ornare.edu','16131019 7213','1794 Vehicula St.','589-2165 Sollicitudin Street','Mobile','62521','PASSWORD');
@@ -422,7 +422,7 @@ INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomen
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (8,11,'16,11',1);
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (8,1,'18,04',3);
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (2,10,'19,40',1);
-INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (4,7,'17,05',3);
+INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (4,31,'17,05',3);
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (5,17,'19,32',1);
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (9,12,'15,30',1);
 INSERT INTO detalheEncomenda (detalheEncomendaRefPrato,detalheEncomendaIDEncomenda,detalheEncomendaPreco,detalheEncomendaQuantidade) VALUES (7,13,'11,29',2);
@@ -459,7 +459,7 @@ INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNClie
 INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNCliente,encomendasDataHora,encomendasMetodoPagamento,encomendasConfirmarRecebido) VALUES (17,10,43,to_date('03/09/2020','dd/mm/yyyy' ),'1','1');
 INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNCliente,encomendasDataHora,encomendasMetodoPagamento,encomendasConfirmarRecebido) VALUES (18,6,10,to_date('25/12/2019','dd/mm/yyyy' ),'1','1');
 INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNCliente,encomendasDataHora,encomendasMetodoPagamento,encomendasConfirmarRecebido) VALUES (19,9,53,to_date('18/12/2020','dd/mm/yyyy' ),'1','1');
-INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNCliente,encomendasDataHora,encomendasMetodoPagamento,encomendasConfirmarRecebido) VALUES (20,7,74,to_date('08/05/2020','dd/mm/yyyy' ),'1','1');
+INSERT INTO encomendas (encomendasIDEncomenda,encomendasRefPrato,encomendasNCliente,encomendasDataHora,encomendasMetodoPagamento,encomendasConfirmarRecebido) VALUES (31,7,74,to_date('08/05/2020','dd/mm/yyyy' ),'1','1');
 
 /*************************************************
     INSERE NA TABELA TIPOSESTADOS
@@ -623,11 +623,12 @@ WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncome
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4
 SELECT COUNT(*) FROM mostraDetalhes
 
-<<<<<<< Updated upstream
 SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
 FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
 WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
-=======
+
+SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes
+
 DROP VIEW materiaisPrato
 
 CREATE VIEW materiaisPrato AS
@@ -639,4 +640,3 @@ ORDER BY m.menuRefPrato
 SELECT COUNT(*) FROM materiaisPrato
 
 SELECT * FROM materiaisPrato WHERE idPrato = 1
->>>>>>> Stashed changes

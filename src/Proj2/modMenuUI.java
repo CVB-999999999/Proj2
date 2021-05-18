@@ -224,7 +224,7 @@ public class modMenuUI {
         String nome = textField1.getText();
         String preco = textField2.getText();
         String descri = textField3.getText();
-        
+
         // TO DO
         // UPDATE PRATO com dados novos
         // UPDATE / INSERT INGREDIENTES

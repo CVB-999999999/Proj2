@@ -146,7 +146,6 @@ public class encomendaCliente {
             ss.next();
             int n = ss.getInt("n");
 
-            n=100;
             ResultSet rs = st.executeQuery();
             encomenda = new String[n][6];
             int i = 0;
