@@ -31,6 +31,7 @@ DROP TABLE diversosEstados;
 /*---------------------------------------------------
                     Cria as Tabelas
 -----------------------------------------------------*/
+SELECT * FROM funcionarios
 /* Cria a TABELA MENU */
 CREATE TABLE  menu  (
     menuRefPrato number NOT NULL, 
@@ -244,7 +245,7 @@ INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,c
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (51,'Samuel','laoreet.libero.et@aliquetvelvulputate.co.uk','16260521 9175','P.O. Box 404, 2438 Ipsum Rd.','Ap #461-3423 Vivamus St.','Bahawalnagar','08854','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (52,'Byron','sed@nunc.org','16350105 0599','768-8228 Nonummy Road','P.O. Box 757, 7079 Eget Rd.','Regina','60194','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (53,'Evelyn','nunc.est.mollis@Aliquamrutrumlorem.co.uk','16100119 9296','Ap #232-8057 Scelerisque Street','187-2642 Neque St.','Hofheim am Taunus','11778','PASSWORD');
-INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (54,'Adara','Donec.felis.orci@ornarelectusjusto.ca','16620128 1273','157-5929 Pede. St.','Ap #458-3671 Nullam Ave','Los Ã?lamos','28292','PASSWORD');
+INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (54,'Adara','Donec.felis.orci@ornarelectusjusto.ca','16620128 1273','157-5929 Pede. St.','Ap #458-3671 Nullam Ave','Los ï¿½?lamos','28292','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (55,'Russell','a@pedenonummyut.co.uk','16060226 9557','Ap #361-9255 Id Rd.','265-8822 Sed Road','Kakisa','31019','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (56,'Kristen','Nunc.mauris@faucibusMorbivehicula.org','16721120 5179','960-327 Justo Rd.','Ap #310-1695 Ut, St.','Istres','89552','PASSWORD');
 INSERT INTO cliente (clienteNCliente,clienteNome,clienteEmail,clienteTelemovel,clienteEnderecoLinha1,clienteEnderecoLinha2,clienteCidade,clienteCodigoPostal,clientePass) VALUES (57,'Camden','ac.sem@ornare.edu','16131019 7213','1794 Vehicula St.','589-2165 Sollicitudin Street','Mobile','62521','PASSWORD');

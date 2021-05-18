@@ -78,7 +78,7 @@ public class funcionario {
                 else this.funcao = "";
                 if (rs.getString("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getLong("funcionariosDataAdmissao");
                 existeFunc = Boolean.TRUE;
-                //this.demitido = rs.getInt("funcionariosDemissao");
+                this.demitido = rs.getInt("funcionariosDemissao");
 
             }
             else{
@@ -112,7 +112,7 @@ public class funcionario {
 
             n=100;
             ResultSet rs = st.executeQuery();
-            funcionario = new String[n][4];
+            funcionario = new String[n][5];
             int i = 0;
             while (rs.next()) {
 
@@ -128,7 +128,11 @@ public class funcionario {
                 if (rs.getString("funcionariosDataAdmissao") != null) {
                     funcionario[i][3] = rs.getString("funcionariosDataAdmissao");
                 }
-                //funcionario[i][4] = (rs.getString("funcionariosDemissao"));
+                if(rs.getInt("funcionariosDemissao") == 0){
+                    funcionario[i][4] = "Sim";
+                }else{
+                    funcionario[i][4] = "Não";
+                }
                 i++;
             }
 
