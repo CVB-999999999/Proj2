@@ -24,7 +24,6 @@ public class menuUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
         table1.setPreferredScrollableViewportSize(new Dimension(550, 200));
@@ -56,6 +55,7 @@ public class menuUI {
                 if (table1.getSelectedRow() > -1) {
                     // print first column value from selected row
                     System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+
                     int value = table1.getSelectedRow();
 
                     Object[] options = {"Alterar", "Remover", "Cancelar"};
