@@ -77,7 +77,7 @@ public class ingredientes {
     /**
      * <h1> Ler todos os registos de ingredientes </h1>
      *
-     * @return lista - 1 : Ref Produto - 2 : Nome Produto
+     * @return lista com: | 1 : Ref Produto | 2 : Nome Produto
      */
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
@@ -122,7 +122,6 @@ public class ingredientes {
     public static ArrayList<String[]> readIngPrato(int id) {
         Connection conn = util.criarConexao();
         ArrayList<String[]> lista = new ArrayList<>();
-        String[] aux = new String[3];
 
         String sqlCommand = "SELECT idProduto, nomeProduto, quantidade FROM materiaisPrato WHERE idPrato = ?";
 
@@ -133,6 +132,7 @@ public class ingredientes {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
+                String[] aux = new String[3];
 
                 if (rs.getString("idProduto") != null) {
                     aux[0] = (rs.getString("idProduto"));

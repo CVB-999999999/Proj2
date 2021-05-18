@@ -23,12 +23,17 @@ public class modMenuUI {
     private DefaultTableModel model = new DefaultTableModel();
     JFrame frame = new JFrame();
 
-    public modMenuUI(int id) {
+    public modMenuUI(int id, String nome, String preco, String descricao) {
+
         JFrame.setDefaultLookAndFeelDecorated(false);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        textField1.setText(nome);
+        textField2.setText(preco);
+        textField3.setText(descricao);
 
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
@@ -69,6 +74,7 @@ public class modMenuUI {
                         options[0]);
                 //  Guardar as alterações e sair
                 if(n == JOptionPane.YES_OPTION) {
+                    saveChanges();
                     frame.setVisible(false);
                     frame.dispose();
                 }
@@ -84,6 +90,7 @@ public class modMenuUI {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                saveChanges();
                 frame.setVisible(false);
                 frame.dispose();
             }
@@ -107,17 +114,34 @@ public class modMenuUI {
                 if ((s != null) && (s.length() > 0)) {
                     System.out.println(s);
                     int j;
+                    int num = 0;
                     for (j=0 ; j<ingr.length ; j++) {
-                        if(s.compareToIgnoreCase(ingr[j][1])==1) {
-                            String[] aux = new String[2];
-                            aux[0] = ingr[j][0];
-                            aux[1] = ingr[j][1];
-                            aux[2] = "1";
+                        if(s.compareToIgnoreCase(ingr[j][1])==0) {
+                            for (int h = 0 ; h < data.size() ; h++) {
+                                if(data.get(h)[1].compareToIgnoreCase(s) == 0) {
+                                    String[] aux = new String[3];
+                                    aux[0] = ingr[j][0];
+                                    aux[1] = ingr[j][1];
+                                    num = Integer.parseInt(data.get(h)[2]) + 1;
+                                    aux[2] = String.valueOf(num);
 
-                            data.add(aux);
+                                    data.set(h, aux);
+                                    update();
+                                    break;
+                                }
+                            }
 
-                            update();
-                            break;
+                            if(num == 0) {
+                                String[] aux = new String[3];
+                                aux[0] = ingr[j][0];
+                                aux[1] = ingr[j][1];
+                                aux[2] = "1";
+
+                                data.add(aux);
+
+                                update();
+                                break;
+                            }
                         }
                     }
                 }
@@ -130,7 +154,7 @@ public class modMenuUI {
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
 
-                    int value = Integer.parseInt(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+                    int value = table1.getSelectedRow();
                     System.out.println(value);
 
                     Object[] options = {"Alterar quantidade", "Remover", "Cancelar"};
@@ -144,9 +168,43 @@ public class modMenuUI {
                             options[0]);
                     //  Alterar a qtd do ingrediente
                     if(n == JOptionPane.YES_OPTION) {
+                        System.out.println(data.get(value)[0]);
+
+                        String s;
+                        int num = Integer.parseInt(data.get(value)[2]);
+                        do {
+                            s = (String) JOptionPane.showInputDialog(
+                                    frame,
+                                    "Introduza a nova quantidade:",
+                                    "Alterar quantidade",
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null,
+                                    null,
+                                    null);
+                            s = s.trim();
+                            // Converte a String para Int
+                            try {
+                                num = Integer.parseInt(s);
+                            } catch (Exception e) {
+                                System.out.println("Foi introduzido um caracter na String, quando deveriam ser apenas introduzidos numeros");
+                            }
+                        } while(num < 0);
+
+                        System.out.println(num);
+
+                        String[] aux = new String[3];
+                        aux[0] = data.get(value)[0];
+                        aux[1] = data.get(value)[1];
+                        aux[2] = String.valueOf(num);
+
+                        data.set(value, aux);
+                        update();
+                        System.out.println(data.get(value)[2]);
                     }
                     //  Remover o ingrediente
                     if(n == JOptionPane.NO_OPTION) {
+                        data.remove(value);
+                        update();
                     }
                 }
             }
@@ -160,5 +218,17 @@ public class modMenuUI {
             model.addRow(data.get(i));
         }
         table1.setModel(model);
+    }
+
+    public void saveChanges() {
+        String nome = textField1.getText();
+        String preco = textField2.getText();
+        String descri = textField3.getText();
+        
+        // TO DO
+        // UPDATE PRATO com dados novos
+        // UPDATE / INSERT INGREDIENTES
+
+        System.out.println("Exit and Save");
     }
 }
