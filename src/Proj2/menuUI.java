@@ -69,7 +69,7 @@ public class menuUI {
                             options[0]);
                     //  Alterar o prato
                     if(n == JOptionPane.YES_OPTION) {
-                        modMenuUI mod = new modMenuUI();
+                        modMenuUI mod = new modMenuUI(Integer.parseInt(data[value][0]));
                     }
                     //  Remover o prato
                     if(n == JOptionPane.NO_OPTION) {

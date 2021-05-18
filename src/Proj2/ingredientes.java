@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ingredientes {
@@ -108,6 +109,44 @@ public class ingredientes {
             }
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
+        }
+        return lista;
+    }
+
+    /**
+     * <h1> Ler todos os registos de ingredientes de cada prato </h1>
+     *
+     * @param id - id do prato a buscar os ingredientes
+     * @return lista - 1 : Ref Produto - 2 : Nome Produto
+     */
+    public static ArrayList<String[]> readIngPrato(int id) {
+        Connection conn = util.criarConexao();
+        ArrayList<String[]> lista = new ArrayList<>();
+        String[] aux = new String[3];
+
+        String sqlCommand = "SELECT idProduto, nomeProduto, quantidade FROM materiaisPrato WHERE idPrato = ?";
+
+        try {
+            PreparedStatement st = conn.prepareStatement(sqlCommand);
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                if (rs.getString("idProduto") != null) {
+                    aux[0] = (rs.getString("idProduto"));
+                }
+                if (rs.getString("nomeProduto") != null) {
+                    aux[1] = (rs.getString("nomeProduto"));
+                }
+                if (rs.getString("quantidade") != null) {
+                    aux[2] = (rs.getString("quantidade"));
+                }
+                lista.add(aux);
+            }
+        } catch (SQLException ex) {
+            System.out.println("ERRO - readIngPrato: " + ex.getMessage());
         }
         return lista;
     }

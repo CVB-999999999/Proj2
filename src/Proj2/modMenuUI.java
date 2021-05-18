@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class modMenuUI {
     private JButton cancelarButton;
@@ -17,12 +18,12 @@ public class modMenuUI {
     private JTextField textField3;
     private JButton adicionarIngredienteButton;
     private JPanel panel;
-    private String[][] data;
+    private ArrayList<String[]> data;
     private String[][] ingr;
     private DefaultTableModel model = new DefaultTableModel();
     JFrame frame = new JFrame();
 
-    public modMenuUI() {
+    public modMenuUI(int id) {
         JFrame.setDefaultLookAndFeelDecorated(false);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,15 +36,15 @@ public class modMenuUI {
 
         model.addColumn("Referencia Ingrediente");
         model.addColumn("Nome Ingrediente");
-        model.addColumn("Preco");
         model.addColumn("Quantidade");
 
-        data = menu.readAll();
+        data = ingredientes.readIngPrato(id);
+        System.out.println(id);
         ingr = ingredientes.readAll();
 
         int i=0;
-        for (i=0 ; i<data.length ; i++) {
-            model.addRow(data[i]);
+        for (i=0 ; i<data.size() ; i++) {
+            model.addRow(data.get(i));
         }
 
         // Cria um array com todos os ingredientes que o utilizador pode adicionar ao menu
@@ -105,6 +106,20 @@ public class modMenuUI {
                 // add ao array de ingredientes e so no fim guardar na bd
                 if ((s != null) && (s.length() > 0)) {
                     System.out.println(s);
+                    int j;
+                    for (j=0 ; j<ingr.length ; j++) {
+                        if(s.compareToIgnoreCase(ingr[j][1])==1) {
+                            String[] aux = new String[2];
+                            aux[0] = ingr[j][0];
+                            aux[1] = ingr[j][1];
+                            aux[2] = "1";
+
+                            data.add(aux);
+
+                            update();
+                            break;
+                        }
+                    }
                 }
             }
         });
@@ -136,5 +151,14 @@ public class modMenuUI {
                 }
             }
         });
+    }
+    public void update() {
+        model.setNumRows(0);
+
+        int i=0;
+        for (i=0 ; i<data.size() ; i++) {
+            model.addRow(data.get(i));
+        }
+        table1.setModel(model);
     }
 }
