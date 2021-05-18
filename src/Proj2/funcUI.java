@@ -30,6 +30,7 @@ public class funcUI {
         model.addColumn("Nome");
         model.addColumn("Posto de Trabalho");
         model.addColumn("Data de Admissão");
+        //model.addColumn("Funcionario Ativo");
         String[][] data = funcionario.readAll();
 
         int i=0;

@@ -11,6 +11,7 @@ public class funcionario {
     private String funcao;
     private long dataAdmissao;
     private Boolean existeFunc;
+    private int demitido;   //Se for demitido a cor da linha fica a vermelho
 
     public funcionario(){}
 
@@ -30,6 +31,9 @@ public class funcionario {
 
     public void setDataAdmissao(long dataAdmissao) {this.dataAdmissao = dataAdmissao;}
 
+    public int getDemitido() {return demitido;}
+    public void setDemitido(int demitido) {this.demitido = demitido;}
+
     /**
      * <h1> Insert na BD </h1>
      */
@@ -37,7 +41,7 @@ public class funcionario {
         // PreparedStatement
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "INSERT INTO FUNCIONARIOS COLUMNS(funcionariosCodFuncionario, funcionariosNome, funcionariosFuncao, funcionariosDataAdmissao) VALUES(?, ?, ?, NOW())";
+        String sqlCommand = "INSERT INTO FUNCIONARIOS COLUMNS(funcionariosCodFuncionario, funcionariosNome, funcionariosFuncao, funcionariosDataAdmissao, funcionariosDemissao) VALUES(?, ?, ?, NOW(), 0)";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -74,6 +78,7 @@ public class funcionario {
                 else this.funcao = "";
                 if (rs.getString("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getLong("funcionariosDataAdmissao");
                 existeFunc = Boolean.TRUE;
+                //this.demitido = rs.getInt("funcionariosDemissao");
 
             }
             else{
@@ -118,11 +123,12 @@ public class funcionario {
                     funcionario[i][1] = (rs.getString("funcionariosNome"));
                 }
                 if (rs.getString("funcionariosFuncao") != null) {
-                    funcionario[i][2] = String.valueOf((rs.getInt("funcionariosFuncao")));
+                    funcionario[i][2] = (rs.getString("funcionariosFuncao"));
                 }
                 if (rs.getString("funcionariosDataAdmissao") != null) {
                     funcionario[i][3] = rs.getString("funcionariosDataAdmissao");
                 }
+                //funcionario[i][4] = (rs.getString("funcionariosDemissao"));
                 i++;
             }
 

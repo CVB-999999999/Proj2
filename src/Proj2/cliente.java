@@ -182,7 +182,7 @@ public class cliente {
                     cliente[i][1] = (rs.getString("clienteNome"));
                 }
                 if (rs.getString("clienteEmail") != null) {
-                    cliente[i][2] = String.valueOf((rs.getInt("clienteEmail")));
+                    cliente[i][2] = (rs.getString("clienteEmail"));
                 }
                 if (rs.getString("clienteTelemovel") != null) {
                     cliente[i][3] = (rs.getString("clienteTelemovel"));
