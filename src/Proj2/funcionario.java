@@ -1,8 +1,7 @@
 package Proj2;
 
-import java.util.Date;
-
 import java.sql.*;
+import java.time.LocalDate;
 
 public class funcionario {
 
@@ -157,5 +156,28 @@ public class funcionario {
             }
         }
         return 0;
+    }
+
+    /**
+     * <h1> Update demissão</h1>
+     */
+
+    public static void atualizaAdmissao(int codFunc, int codD) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "UPDATE funcionarios SET funcionariosDemissao=? WHERE funcionariosCodFuncionario=?";
+
+        try {
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setInt(1, codD);
+            st1.setInt(2, codFunc);
+
+            st1.execute();
+            conn.commit();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
+        }
     }
 }

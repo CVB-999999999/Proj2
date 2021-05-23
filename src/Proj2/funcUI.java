@@ -47,29 +47,64 @@ public class funcUI {
             }
         });
 
-        /*table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
                     // print first column value from selected row
-                    System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
-                    String value = table1.getModel().getValueAt(table1.getSelectedRow(), 0).toString();
+                    System.out.println(table1.getValueAt(table1.getSelectedRow(), 1).toString());
+                    String value = table1.getModel().getValueAt(table1.getSelectedRow(), 1).toString();
+
+                    String codigo = table1.getModel().getValueAt(table1.getSelectedRow(), 0).toString();
+                    System.out.println(codigo);
+                    int codFunc = Integer.parseInt(codigo);
+
+                    String codigoD = table1.getModel().getValueAt(table1.getSelectedRow(), 4).toString();;
+                    System.out.println(codigo);
+                    String codDM;
+                    int codD;
+
+                    if(codigoD.equals("Sim")){
+                        codD = 1;
+                        codDM = "demitir";
+                    }else{
+                        codD = 0;
+                        codDM = "readmitir";
+                    }
+
+                    System.out.println(codD);
 
                     Object[] options = {"Sim", "Não"};
                     int n = JOptionPane.showOptionDialog(frame,
-                            "Prentende marcar o pedido nº " + value + " como concluido?",
-                            "Marcar o pedido como concluido",
+                            "Prentende " + codDM + " o funcionário " + value + "?",
+                            "Demitir funcionário",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
                             null,
                             options,
                             options[0]);
                     if(n == JOptionPane.YES_OPTION) {
-                        String[][] data = encomendaCliente.readAll();
-                        table1.updateUI();
+                        funcionario.atualizaAdmissao(codFunc, codD);
+
+                        DefaultTableModel model = new DefaultTableModel();
+                        table1.setAutoCreateRowSorter(true);
+                        table1.setFillsViewportHeight(true);
+                        table1.setPreferredScrollableViewportSize(new Dimension(550, 200));
+                        model.addColumn("Número");
+                        model.addColumn("Nome");
+                        model.addColumn("Posto de Trabalho");
+                        model.addColumn("Data de Admissão");
+                        model.addColumn("Funcionario Ativo");
+                        String[][] data = funcionario.readAll();
+
+                        int i=0;
+                        for (i=0 ; i<data.length ; i++) {
+                            model.addRow(data[i]);
+                        }
+                        table1.setModel(model);
                     }
                 }
             }
-        });*/
+        });
     }
 }
