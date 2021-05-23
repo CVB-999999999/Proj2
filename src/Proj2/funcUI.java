@@ -52,6 +52,8 @@ public class funcUI {
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
                     // print first column value from selected row
+                    int v = table1.getSelectedRow();
+
                     System.out.println(table1.getValueAt(table1.getSelectedRow(), 1).toString());
                     String value = table1.getModel().getValueAt(table1.getSelectedRow(), 1).toString();
 
@@ -66,17 +68,17 @@ public class funcUI {
 
                     if(codigoD.equals("Sim")){
                         codD = 1;
-                        codDM = "demitir";
+                        codDM = "Demitir";
                     }else{
                         codD = 0;
-                        codDM = "readmitir";
+                        codDM = "Readmitir";
                     }
 
                     System.out.println(codD);
 
-                    Object[] options = {"Sim", "Não"};
+                    Object[] options = {"Editar", codDM, "Cancelar"};
                     int n = JOptionPane.showOptionDialog(frame,
-                            "Prentende " + codDM + " o funcionário " + value + "?",
+                            "Prentende mudar o funcionário " + value + "?",
                             "Demitir funcionário",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,
@@ -84,6 +86,12 @@ public class funcUI {
                             options,
                             options[0]);
                     if(n == JOptionPane.YES_OPTION) {
+                        modFuncUI mod = new modFuncUI(Integer.parseInt(data[v][0]), data[v][1], data[v][2], data[v][3], data[v][4]);
+
+                        frame.setVisible(false);
+                        frame.dispose();
+                    }
+                    if(n == JOptionPane.NO_OPTION) {
                         funcionario.atualizaAdmissao(codFunc, codD);
 
                         DefaultTableModel model = new DefaultTableModel();

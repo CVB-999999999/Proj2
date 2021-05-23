@@ -90,6 +90,42 @@ public class funcionario {
         }
     }
 
+
+    /**
+     * <h1> Ler a BD Funcionario nome e função</h1>
+     */
+    public void readFUNC(int idFunc){
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "SELECT funcionariosNome, funcionariosFuncao, funcionariosDemissao FROM FUNCIONARIOS WHERE funcionariosCodFuncionario = ?";
+
+        try {
+            PreparedStatement st = conn.prepareStatement(sqlCommand);
+            st.setInt(1, idFunc);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()){
+                this.idFunc = idFunc;
+                if (rs.getString("funcionariosNome") != null) this.nome = rs.getString("funcionariosNome");
+                else this.nome = "";
+                if (rs.getString("funcionariosFuncao") != null) this.funcao = rs.getString("funcionariosFuncao");
+                else this.funcao = "";
+                this.demitido = rs.getInt("funcionariosDemissao");
+                existeFunc = Boolean.TRUE;
+
+            }
+            else{
+                System.out.println("ERRO: Não existe Funcionario com o ID definido ");
+                existeFunc = Boolean.FALSE;
+            }
+        } catch (SQLException ex) {
+            System.out.println("ERRO: " + ex.getMessage());
+            existeFunc = Boolean.FALSE;
+        }
+    }
+
+
     /**
      * <h1> Ler todos os registos de funcionarios </h1>
      */
@@ -144,16 +180,22 @@ public class funcionario {
 
 
     public int login(int id, String pass) {
-        read(id);
+        readFUNC(id);
 
-        if(!existeFunc) {
-            System.out.println("Ocorreu um erro");
-            return 1;
+        System.out.println(id);
+        System.out.println(pass.equals(getNome()));
 
-        } else {
-            if(pass.compareTo("admin") == 0) {
-                return 2;
+        if (existeFunc) {
+            if(getDemitido()==1){
+                return 3;
             }
+            if(pass.equals(getNome()) && getDemitido()==0) {
+                return 1;
+            }
+        } else {
+            System.out.println("Ocorreu um erro");
+            return 2;
+
         }
         return 0;
     }
@@ -172,6 +214,30 @@ public class funcionario {
 
             st1.setInt(1, codD);
             st1.setInt(2, codFunc);
+
+            st1.execute();
+            conn.commit();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * <h1> Update funcionario</h1>
+     */
+
+    public static void updateFuncionario(int codFunc, String nome, String funcao) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "UPDATE funcionarios SET funcionariosNome=?, funcionariosFuncao=? WHERE funcionariosCodFuncionario=?";
+
+        try {
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setString(1, nome);
+            st1.setString(2, funcao);
+            st1.setInt(3, codFunc);
 
             st1.execute();
             conn.commit();

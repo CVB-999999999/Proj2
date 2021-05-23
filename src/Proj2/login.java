@@ -20,6 +20,9 @@ public class login {
 
     public login() {
         JFrame frame = new JFrame("login");
+
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("../assets/ve-logo-40x40.png")));
+
         JFrame.setDefaultLookAndFeelDecorated(false);
         frame.setContentPane(login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +47,7 @@ public class login {
                 System.out.println(id + pass);
 
                 codigo = f.login( id, pass);
+                System.out.println(codigo);
 
                 switch (codigo) {
                     case 2: {
@@ -51,13 +55,18 @@ public class login {
                         break;
                     }
                     case 1: {
+
                         erro.setForeground(Color.GREEN);
                         erro.setText("Sucesso");
 
-                        menuPrincipal mp = new menuPrincipal();
+                        menuPrincipal mp = new menuPrincipal(f.getFuncao());
                         frame.setVisible(false);
                         frame.dispose();
 
+                        break;
+                    }
+                    case 3:{
+                        erro.setText("Este Funcionario encontra-se demitido. Contacte o Gerente");
                         break;
                     }
                     default:

@@ -18,6 +18,7 @@ public class modMenuUI {
     private JTextField textField3;
     private JButton adicionarIngredienteButton;
     private JPanel panel;
+    private JLabel idPrato;
     private ArrayList<String[]> data;
     private String[][] ingr;
     private DefaultTableModel model = new DefaultTableModel();
@@ -34,6 +35,7 @@ public class modMenuUI {
         textField1.setText(nome);
         textField2.setText(preco);
         textField3.setText(descricao);
+        idPrato.setText(String.valueOf(id));
 
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
