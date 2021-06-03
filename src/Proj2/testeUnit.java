@@ -82,4 +82,16 @@ public class testeUnit {
 
         Assertions.assertEquals(8, Integer.parseInt(funcLgValor.get(1)[0]));
     }
+
+    /* --- Conexão --- */
+    /**
+     * Verifica se é possivel existir uma conexão
+     */
+    @Test
+    public void testarConexao(){
+        util con = new util();
+
+        Assertions.assertNotEquals(null, con);
+    }
+
 }
