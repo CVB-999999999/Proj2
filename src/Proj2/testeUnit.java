@@ -29,4 +29,16 @@ public class testeUnit {
 
         Assertions.assertEquals(1, funcLgValor);
     }
+
+    /**
+     * Verifica ...
+     */
+    @Test
+    public void aaa(){
+        funcionario lgTeste = new funcionario();
+
+        int funcLgValor = funcionario.atualizaAdmissao(0,0);
+
+        Assertions.assertEquals(1, funcLgValor);
+    }
 }
