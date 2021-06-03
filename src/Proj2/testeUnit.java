@@ -68,7 +68,7 @@ public class testeUnit {
 
         ArrayList<String[]> funcLgValor = lgTeste.readIngPrato(0);
 
-        Assertions.assertEquals(null, funcLgValor.get(1)[0]);
+        Assertions.assertEquals(new ArrayList<>(), funcLgValor);
     }
 
     /**
