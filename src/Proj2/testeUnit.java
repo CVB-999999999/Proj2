@@ -28,9 +28,9 @@ public class testeUnit {
     public void comValoresEnc(){
         encomendaCliente testeEnc = new encomendaCliente();
 
-        String[] funcLgValor = testeEnc.read(31);
+        String[] funcLgValor = testeEnc.read(2);
 
-        Assertions.assertEquals(31, Integer.parseInt(funcLgValor[0]));
+        Assertions.assertEquals(2, Integer.parseInt(funcLgValor[0]));
     }
 
     /* --- Login --- */
