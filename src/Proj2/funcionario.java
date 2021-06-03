@@ -40,7 +40,7 @@ public class funcionario {
         // PreparedStatement
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "INSERT INTO FUNCIONARIOS COLUMNS(funcionariosCodFuncionario, funcionariosNome, funcionariosFuncao, funcionariosDataAdmissao, funcionariosDemissao) VALUES(?, ?, ?, NOW(), 0)";
+        String sqlCommand = "INSERT INTO FUNCIONARIOS COLUMNS(funcionariosCodFuncionario, funcionariosNome, funcionariosFuncao, funcionariosDataAdmissao/*, funcionariosDemissao*/) VALUES(?, ?, ?, NOW()/*, 0*/)";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -77,7 +77,7 @@ public class funcionario {
                 else this.funcao = "";
                 if (rs.getString("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getLong("funcionariosDataAdmissao");
                 existeFunc = Boolean.TRUE;
-                this.demitido = rs.getInt("funcionariosDemissao");
+                //this.demitido = rs.getInt("funcionariosDemissao");
 
             }
             else{
@@ -97,7 +97,7 @@ public class funcionario {
     public void readFUNC(int idFunc){
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT funcionariosNome, funcionariosFuncao, funcionariosDemissao FROM FUNCIONARIOS WHERE funcionariosCodFuncionario = ?";
+        String sqlCommand = "SELECT funcionariosNome, funcionariosFuncao/*, funcionariosDemissao */FROM FUNCIONARIOS WHERE funcionariosCodFuncionario = ?";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -111,7 +111,7 @@ public class funcionario {
                 else this.nome = "";
                 if (rs.getString("funcionariosFuncao") != null) this.funcao = rs.getString("funcionariosFuncao");
                 else this.funcao = "";
-                this.demitido = rs.getInt("funcionariosDemissao");
+                //this.demitido = rs.getInt("funcionariosDemissao");
                 existeFunc = Boolean.TRUE;
 
             }

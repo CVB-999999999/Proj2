@@ -1,12 +1,7 @@
 package Proj2;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class encomendaCliente {
     private int refPrato;
@@ -97,34 +92,41 @@ public class encomendaCliente {
 
     /**
      * <h1> Ler a BD </h1>
-     *//*
-    public void read(int idCliente1){
+     * @return
+     */
+    public String[] read(int idEncomenda){
         Connection conn = util.criarConexao();
+        String[] encomenda = new String[5];
 
-        //String sqlCommand = "SELECT CLIENTENOME, CLIENTEENDERECOLINHA1, CLIENTECODIGOPOSTAL FROM CLIENTE WHERE CLIENTENCLIENTE = ?";
-        String sqlCommand = "SELECT * FROM CLIENTE WHERE CLIENTENCLIENTE = ?";
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes WHERE idEncomenda = ?";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
-            st.setInt(1, idCliente1);
+            st.setInt(1, idEncomenda);
 
             ResultSet rs = st.executeQuery();
 
-            if(rs.next()){
-                this.idCliente = idCliente1;
-                if (rs.getString("CLIENTENOME") != null) this.nome = rs.getString("CLIENTENOME");
-                else this.nome = "";
-                if (rs.getString("CLIENTEENDERECOLINHA1") != null) this.rua = rs.getString("CLIENTEENDERECOLINHA1");
-                else this.rua = "";
-                if (rs.getString("CLIENTECODIGOPOSTAL") != null) this.codPostal = rs.getString("CLIENTECODIGOPOSTAL");
-                else this.codPostal = "";
-            }
-            else{
-                System.out.println("ERRO: Não existe Cliente com o ID definido ");
+            while (rs.next()) {
+
+                encomenda[0] = (rs.getString("idEncomenda"));
+
+                if (rs.getString("menu") != null) {
+                    encomenda[1] = (rs.getString("menu"));
+                }
+                if (rs.getString("quantidade") != null) {
+                    encomenda[2] = String.valueOf((rs.getInt("quantidade")));
+                }
+                if (rs.getString("datahora") != null) {
+                    encomenda[3] = (rs.getString("datahora"));
+                }
+                if (rs.getString("estado") != null) {
+                    encomenda[4] = (rs.getString("estado"));
+                }
             }
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
+        return encomenda;
     }
 
     /**
