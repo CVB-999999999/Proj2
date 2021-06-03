@@ -16,7 +16,7 @@ public class testeUnit {
     public void semValorFalsoEnc(){
         encomendaCliente testeEnc = new encomendaCliente();
 
-        String[] funcLgValor = testeEnc.read(33);
+        String[] funcLgValor = testeEnc.read(0);
 
         Assertions.assertEquals(null, funcLgValor[0]);
     }
@@ -41,7 +41,7 @@ public class testeUnit {
     public void semValorFalso(){
         funcionario lgTeste = new funcionario();
 
-        int funcLgValor = lgTeste.login(0, "123");
+        int funcLgValor = lgTeste.login(99, "teste");
 
         Assertions.assertEquals(2, funcLgValor);
     }
@@ -53,7 +53,7 @@ public class testeUnit {
     public void comValores(){
         funcionario lgTeste = new funcionario();
 
-        int funcLgValor = lgTeste.login(6, "Maia");
+        int funcLgValor = lgTeste.login(1, "Latifah");
 
         Assertions.assertEquals(1, funcLgValor);
     }
@@ -66,7 +66,7 @@ public class testeUnit {
     public void semValorFalsoIngr(){
         ingredientes lgTeste = new ingredientes();
 
-        ArrayList<String[]> funcLgValor = lgTeste.readIngPrato(0);
+        ArrayList<String[]> funcLgValor = lgTeste.readIngPrato(999999);
 
         Assertions.assertEquals(new ArrayList<>(), funcLgValor);
     }
