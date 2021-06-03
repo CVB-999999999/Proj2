@@ -7,22 +7,26 @@ import org.junit.jupiter.api.Test;
 public class testeUnit {
 
     /**
-     * Verifica se foram enviados dados para atualização
+     * Verifica se os valores inseridos são falsos
      */
     @Test
-    public void semValorFornecido(){
+    public void semValorFalso(){
         funcionario lgTeste = new funcionario();
 
-        double funcLgValor = funcionario.readAll().length;
+        int funcLgValor = lgTeste.login(0, "123");
 
-        Assertions.assertEquals(0, funcLgValor);
+        Assertions.assertEquals(2, funcLgValor);
     }
 
     /**
-     * Verifica a qualidade dos dados
+     * Verifica se os valores inseridos são verdadeiros
      */
     @Test
     public void comValores(){
+        funcionario lgTeste = new funcionario();
 
+        int funcLgValor = lgTeste.login(6, "Maia");
+
+        Assertions.assertEquals(1, funcLgValor);
     }
 }
