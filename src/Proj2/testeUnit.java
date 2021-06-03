@@ -18,7 +18,7 @@ public class testeUnit {
 
         String[] funcLgValor = testeEnc.read(33);
 
-        Assertions.assertEquals(33, Integer.parseInt(funcLgValor[0]));
+        Assertions.assertEquals(null, funcLgValor[0]);
     }
 
     /**
