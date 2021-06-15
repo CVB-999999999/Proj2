@@ -16,10 +16,12 @@ public class menuUI {
     private JButton adicionarPratoButton;
     private String[][] data;
     private DefaultTableModel model = new DefaultTableModel();
-    JFrame frame = new JFrame();
+    JFrame frame = new JFrame("Lista de Pratos");
 
     public menuUI() {
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(menusPratos);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

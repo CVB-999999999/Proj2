@@ -19,7 +19,9 @@ public class pedidos {
 
     public pedidos() {
         JFrame.setDefaultLookAndFeelDecorated(false);
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Lista de Pedidos");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(pedidos);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -56,16 +58,13 @@ public class pedidos {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
-                    // print first column value from selected row
-                    System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
-                    String value = table1.getModel().getValueAt(table1.getSelectedRow(), 0).toString();
-                    int linha = Integer.valueOf(value);
+                    int linha = table1.getSelectedRow();
 
                     Object[] options = {"Sim", "Não"};
 
                     if (data[linha][4].compareToIgnoreCase("Em preparação") == 0) {
                         int n = JOptionPane.showOptionDialog(frame,
-                                "Prentende marcar o pedido nº " + value + " como \"Concluido\"?",
+                                "Prentende marcar o pedido nº " + linha + " como \"Concluido\"?",
                                 "Marcar o pedido como \"Concluido\"",
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
@@ -80,7 +79,7 @@ public class pedidos {
 
                     } else {
                         int n = JOptionPane.showOptionDialog(frame,
-                                "Prentende marcar o pedido nº " + value + " como \"Em preparação\"?",
+                                "Prentende marcar o pedido nº " + linha + " como \"Em preparação\"?",
                                 "Marcar o pedido como \"Em preparação\"",
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,

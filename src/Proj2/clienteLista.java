@@ -20,8 +20,10 @@ public class clienteLista {
 
     public clienteLista(){
         JFrame.setDefaultLookAndFeelDecorated(false);
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Lista de Clientes");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
         frame.setContentPane(clientes);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

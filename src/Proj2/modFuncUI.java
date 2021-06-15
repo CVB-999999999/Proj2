@@ -14,11 +14,13 @@ public class modFuncUI {
     private JPanel panel;
     private JLabel codigo;
     private JTextField textField4;
-    JFrame frame = new JFrame();
+    JFrame frame = new JFrame("Lista");
 
     public modFuncUI(int cdo, String nome, String funcao, String dataAdmissao, String admissao){
 
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

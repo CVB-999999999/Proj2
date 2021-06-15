@@ -15,8 +15,10 @@ public class funcUI {
     private JPanel funcui;
 
     public funcUI() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Lista de Funcionários");
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(funcui);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

@@ -617,9 +617,12 @@ DROP VIEW mostraDetalhes
 
 /* CRIAR A VIEW que mostra todos os pratos da encomenda */
 CREATE VIEW mostraDetalhes AS
-SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
-FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
-WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
+    SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, 
+        e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
+    FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
+    WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda 
+        and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
+    ORDER BY te.tipoEstadosIDEstadoDiverso DESC
 
 /*  SELECIONAR DETALHES */
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4
@@ -649,5 +652,5 @@ SELECT * FROM detalheEncomenda
 
 SELECT * FROM menu
 SELECT * FROM encomendas
-SELECT * FROM 
+SELECT * FROM tipoEstados
 COMMIT

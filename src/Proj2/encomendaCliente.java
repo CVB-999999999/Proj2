@@ -198,6 +198,7 @@ public class encomendaCliente {
 
             st1.execute();
             conn.commit();
+            System.out.println("Estado updated");
 
         } catch (SQLException ex) {
             System.out.println("ERRO updateEstado: " + ex.getMessage());

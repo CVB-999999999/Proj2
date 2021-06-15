@@ -77,7 +77,7 @@ public class funcionario {
                 else this.funcao = "";
                 if (rs.getString("funcionariosDataAdmissao") != null) this.dataAdmissao = rs.getLong("funcionariosDataAdmissao");
                 existeFunc = Boolean.TRUE;
-                //this.demitido = rs.getInt("funcionariosDemissao");
+                this.demitido = rs.getInt("funcionariosDemissao");
 
             }
             else{
@@ -97,7 +97,7 @@ public class funcionario {
     public void readFUNC(int idFunc){
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT funcionariosNome, funcionariosFuncao/*, funcionariosDemissao */FROM FUNCIONARIOS WHERE funcionariosCodFuncionario = ?";
+        String sqlCommand = "SELECT funcionariosNome, funcionariosFuncao, funcionariosDemissao FROM FUNCIONARIOS WHERE funcionariosCodFuncionario = ?";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
@@ -111,7 +111,7 @@ public class funcionario {
                 else this.nome = "";
                 if (rs.getString("funcionariosFuncao") != null) this.funcao = rs.getString("funcionariosFuncao");
                 else this.funcao = "";
-                //this.demitido = rs.getInt("funcionariosDemissao");
+                this.demitido = rs.getInt("funcionariosDemissao");
                 existeFunc = Boolean.TRUE;
 
             }
@@ -161,13 +161,12 @@ public class funcionario {
                 if (rs.getString("funcionariosDataAdmissao") != null) {
                     funcionario[i][3] = rs.getString("funcionariosDataAdmissao");
                 }
-                funcionario[i][4] = (rs.getString("funcionariosDemissao"));
-                /*if(rs.getInt("funcionariosDemissao") == 0){
-                    System.out.println("ERRO Admissao Funcionarios: " + rs.getInt("funcionariosDemissao"));
+                //funcionario[i][4] = (rs.getString("funcionariosDemissao"));
+                if(rs.getInt("funcionariosDemissao") == 0){
                     funcionario[i][4] = "Sim";
                 }else{
                     funcionario[i][4] = "Não";
-                }*/
+                }
                 i++;
             }
 

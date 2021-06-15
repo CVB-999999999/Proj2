@@ -19,7 +19,7 @@ public class login {
     private int codigo = 0;
 
     public login() {
-        JFrame frame = new JFrame("login");
+        JFrame frame = new JFrame("Página de Login");
 
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("../assets/ve-logo-40x40.png")));
 
@@ -51,7 +51,7 @@ public class login {
 
                 switch (codigo) {
                     case 2: {
-                        erro.setText("O ID do Funcionario não foi encontrado");
+                        erro.setText("O ID do Funcionario não foi encontrado ou a palavra passe está errada");
                         break;
                     }
                     case 1: {
