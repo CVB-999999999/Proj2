@@ -135,8 +135,11 @@ public class encomendaCliente {
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
-        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";
+        /*String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";*/
+
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes1";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes1";
 
         String[][] encomenda = new String[0][];
         try {
