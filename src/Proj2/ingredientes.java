@@ -83,7 +83,7 @@ public class ingredientes {
         Connection conn = util.criarConexao();
         String[][] lista = new String[0][4];
 
-        String sqlCommand = "SELECT materiaPrimaRefProduto, materiaPrimaNome FROM materiaPrima";
+        String sqlCommand = "SELECT materiaPrimaRefProduto, materiaPrimaNome, materiaPrimaQuantidadeAtual, materiaPrimaQuantidadeMinima,materiaPrimaDataHoraVerificacao FROM materiaPrima";
         String count = "SELECT COUNT(*) as n FROM materiaPrima";
 
         try {
@@ -94,7 +94,7 @@ public class ingredientes {
             ss.next();
             int n = ss.getInt("n");
 
-            lista = new String[n][2];
+            lista = new String[n][5];
             ResultSet rs = st.executeQuery();
 
             int i = 0;
@@ -105,6 +105,16 @@ public class ingredientes {
                 if (rs.getString("materiaPrimaNome") != null) {
                     lista[i][1] = (rs.getString("materiaPrimaNome"));
                 }
+                if (rs.getString("materiaPrimaQuantidadeAtual") != null) {
+                    lista[i][2] = (rs.getString("materiaPrimaQuantidadeAtual"));
+                }
+                if (rs.getString("materiaPrimaQuantidadeMinima") != null) {
+                    lista[i][3] = (rs.getString("materiaPrimaQuantidadeMinima"));
+                }
+                if (rs.getString("materiaPrimaDataHoraVerificacao") != null) {
+                    lista[i][4] = (rs.getString("materiaPrimaDataHoraVerificacao"));
+                }
+
                 i++;
             }
         } catch (SQLException ex) {
@@ -170,6 +180,30 @@ public class ingredientes {
 
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * <h1> Update ingrediente</h1>
+     */
+
+    public static void updateIngrediente(int idProduto, int qtdAtual, int qtdMin) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "UPDATE materiaPrima SET materiaPrimaQuantidadeAtual=?, materiaPrimaQuantidadeMinima=?, materiaPrimaDataHoraVerificacao=(select sysdate from dual) WHERE materiaPrimaRefProduto=?";
+
+        try {
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setInt(1, qtdAtual);
+            st1.setInt(2, qtdMin);
+            st1.setInt(3, idProduto);
+
+            st1.execute();
+            conn.commit();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
         }
     }
 }

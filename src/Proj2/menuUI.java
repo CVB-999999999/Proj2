@@ -51,6 +51,30 @@ public class menuUI {
             }
         });
 
+        // Criar prato, cria um prato com apenas o nome e o user depois tem de alterar o prato
+        adicionarPratoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = (String)JOptionPane.showInputDialog(
+                        frame,
+                        "Escolha o nome do Prato: ",
+                        "Adicionar Prato",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        null,
+                        null);
+
+                // INSERT na DB o prato vazio
+                if ((s != null) && (s.length() > 0)) {
+                    menu m = new menu();
+                    m.create(s);
+
+                    System.out.println("Criado prato: " + s);
+                    updateTable();
+                }
+            }
+        });
+
         table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {

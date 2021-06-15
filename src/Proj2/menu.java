@@ -60,22 +60,19 @@ public class menu {
     /**
      * <h1> Insert na BD </h1>
      */
-    public void create(){
+    public void create(String nomeC){
         // PreparedStatement
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "INSERT INTO MENU COLUMNS(menuRefPrato, menuNome, menuDescricao, menuPrecoCusto," +
-                "menuPrecoPVP, menuDataAtualizacao, menuDataCriacao, menuNEncomendas) VALUES(?, ?, ?, ?, ?, ?, NOW(), ?)";
+        String sqlCommand = "INSERT INTO MENU COLUMNS(menuNome, menuDescricao, menuPrecoCusto," +
+                "menuPrecoPVP, menuDataAtualizacao, menuDataCriacao) VALUES(?, ?, ?, ?, (select sysdate from dual), (select sysdate from dual))";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
-            st.setInt(1, this.nMenu);
-            st.setString(2, this.nome);
-            st.setString(3, this.descricao);
-            st.setFloat(4, this.pCusto);
-            st.setFloat(5, this.pVenda);
-            st.setDate(6, (java.sql.Date) this.dAtualizacao);
-            st.setInt(7, this.nEncomendas);
+            st.setString(1, nomeC);
+            st.setString(2, "Descricao");
+            st.setFloat(3, 999999);
+            st.setFloat(4, 999999);
 
             st.execute();
 
