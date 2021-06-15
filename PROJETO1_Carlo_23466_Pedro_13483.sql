@@ -65,6 +65,7 @@ CREATE TABLE  funcionarios  (
     funcionariosNome  varchar2(50) NOT NULL,
     funcionariosFuncao  varchar2(50) NOT NULL,
     funcionariosDataAdmissao  date NOT NULL,
+    funcionariosDemissao int DEFAULT 0,
     PRIMARY KEY ( funcionariosCodFuncionario )
 );
 
@@ -611,11 +612,11 @@ UPDATE cliente SET clienteEmail='salvador@email.com', clienteTelemovel=987654322
                         View's
 -----------------------------------------------------*/
 /* APAGAR VIEW
-DROP VIEW mostraDetalhes*/
+DROP VIEW mostraDetalhes
+*/
 
 /* CRIAR A VIEW que mostra todos os pratos da encomenda */
 CREATE VIEW mostraDetalhes AS
-
 SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
 FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
 WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
@@ -623,6 +624,8 @@ WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncome
 /*  SELECIONAR DETALHES */
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4
 SELECT COUNT(*) FROM mostraDetalhes
+SELECT * FROM mostraDetalhes
+
 
 SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
 FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
@@ -638,6 +641,13 @@ FROM menuMateriais mm, materiaPrima mp, menu m
 WHERE m.menuRefPrato =  menumateriaisrefprato and  mp.materiaPrimaRefProduto = menumateriaisrefproduto
 ORDER BY m.menuRefPrato
 
-SELECT COUNT(*) FROM materiaisPrato
+SELECT * FROM materiaisPrato
 
 SELECT * FROM materiaisPrato WHERE idPrato = 1
+
+SELECT * FROM detalheEncomenda
+
+SELECT * FROM menu
+SELECT * FROM encomendas
+SELECT * FROM 
+COMMIT

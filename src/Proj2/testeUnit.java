@@ -53,7 +53,7 @@ public class testeUnit {
     public void comValores(){
         funcionario lgTeste = new funcionario();
 
-        int funcLgValor = lgTeste.login(1, "Latifah");
+        int funcLgValor = lgTeste.login(1, "123");
 
         Assertions.assertEquals(1, funcLgValor);
     }

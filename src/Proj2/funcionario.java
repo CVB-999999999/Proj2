@@ -145,13 +145,11 @@ public class funcionario {
             ss.next();
             int n = ss.getInt("n");
 
-            n=100;
             ResultSet rs = st.executeQuery();
             funcionario = new String[n][5];
+
             int i = 0;
             while (rs.next()) {
-
-
                 funcionario[i][0] = (rs.getString("funcionariosCodFuncionario"));
 
                 if (rs.getString("funcionariosNome") != null) {
@@ -163,16 +161,18 @@ public class funcionario {
                 if (rs.getString("funcionariosDataAdmissao") != null) {
                     funcionario[i][3] = rs.getString("funcionariosDataAdmissao");
                 }
-                if(rs.getInt("funcionariosDemissao") == 0){
+                funcionario[i][4] = (rs.getString("funcionariosDemissao"));
+                /*if(rs.getInt("funcionariosDemissao") == 0){
+                    System.out.println("ERRO Admissao Funcionarios: " + rs.getInt("funcionariosDemissao"));
                     funcionario[i][4] = "Sim";
                 }else{
                     funcionario[i][4] = "Não";
-                }
+                }*/
                 i++;
             }
 
         } catch (SQLException ex) {
-            System.out.println("ERRO: " + ex.getMessage());
+            System.out.println("ERRO a carregar funcionarios: " + ex.getMessage());
         }
 
         return funcionario;
