@@ -624,6 +624,15 @@ CREATE VIEW mostraDetalhes AS
         and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
     ORDER BY te.tipoEstadosIDEstadoDiverso DESC
 
+
+
+CREATE VIEW mostraDetalhes1 AS
+SELECT e.ENCOMENDASIDENCOMENDA as idEncomenda, m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, e.encomendasDataHora as dataHora, sub.idEstado
+from encomendas e,  menu m, detalheEncomenda d, (SELECT TIPOESTADOSIDENCOMENDA, TIPOESTADOSIDESTADODIVERSO as idEstado FROM TIPOESTADOS ORDER BY TIPOESTADOSDATAHORA DESC) sub
+where d.detalheEncomendaRefPrato = m.menuRefPrato AND d.DetalheEncomendaIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.TIPOESTADOSIDENCOMENDA = e.ENCOMENDASIDENCOMENDA
+
+
+
 /*  SELECIONAR DETALHES */
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4
 SELECT COUNT(*) FROM mostraDetalhes
