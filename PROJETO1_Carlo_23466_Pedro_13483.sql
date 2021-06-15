@@ -577,8 +577,6 @@ INSERT INTO diversosEstados (diversosEstadosIDEstado, diversosEstadosNome) VALUE
 -----------------------------------------------------*/
 SELECT * FROM cliente
 
-commit
-
 SELECT m.menuRefPrato as idPrato, m.menuNome as nomePrato, mp.materiaPrimaRefProduto as idProduto, mp.materiaPrimaNome as nomeProduto
 FROM menuMateriais mm, materiaPrima mp, menu m
 WHERE m.menuRefPrato =  menumateriaisrefprato and  mp.materiaPrimaRefProduto = menumateriaisrefproduto
@@ -593,62 +591,37 @@ SELECT menuRefPrato, menuNome, menuDescricao, menuPrecoPVP FROM Menu where EmUso
 /*********************************************************************************
     QUERY PARA PROCURAR TODOS OS PEDIDOS DE UM DETERMINADO CLIENTE (HISTÓRICO)   
 **********************************************************************************/
-SELECT encomendasIDEncomenda, encomendasDataHora, menuNome FROM encomendas 
-                                                            LEFT JOIN menu ON menuRefPrato=encomendasRefPrato 
-                                                            WHERE encomendasNCliente=85
+SELECT encomendasIDEncomenda, encomendasDataHora, menuNome 
+FROM encomendas 
+LEFT JOIN menu ON menuRefPrato=encomendasRefPrato 
+WHERE encomendasNCliente=85
 
 /*********************************************************************************
                     QUERY PARA PROCURAR O CLIENTE PELO NOME   
 **********************************************************************************/
-SELECT clienteNCliente, clienteEmail, clienteTelemovel FROM cliente WHERE clienteNome='Salvador'
+SELECT clienteNCliente, clienteEmail, clienteTelemovel 
+FROM cliente 
+WHERE clienteNome='Salvador'
 
 /*********************************************************************************
                     QUERY PARA ATUALIZAR DADOS DO CLIENTE   
 **********************************************************************************/
-UPDATE cliente SET clienteEmail='salvador@email.com', clienteTelemovel=987654322 WHERE clienteNCliente=1
+UPDATE cliente SET clienteEmail='salvador@email.com', clienteTelemovel=987654322 
+WHERE clienteNCliente=1
 
 
 /*---------------------------------------------------
                         View's
 -----------------------------------------------------*/
 /* APAGAR VIEW
-DROP VIEW mostraDetalhes
+drop view mostraDetalhes1
 */
 
 /* CRIAR A VIEW que mostra todos os pratos da encomenda */
-CREATE VIEW mostraDetalhes AS
-    SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, 
-        e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
-    FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
-    WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda 
-        and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
-    ORDER BY te.tipoEstadosIDEstadoDiverso DESC
-
-drop view mostraDetalhes1
-
 CREATE VIEW mostraDetalhes1 AS
 SELECT e.ENCOMENDASIDENCOMENDA as idEncomenda, m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, e.encomendasDataHora as dataHora, sub.idEstado
 from encomendas e,  menu m, detalheEncomenda d, (SELECT TIPOESTADOSIDENCOMENDA, max(TIPOESTADOSIDESTADODIVERSO) as idEstado FROM TIPOESTADOS GROUP BY TIPOESTADOSIDENCOMENDA) sub
 where d.detalheEncomendaRefPrato = m.menuRefPrato AND d.DetalheEncomendaIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.TIPOESTADOSIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.idEstado < 4
-
-commit
-
-SELECT TIPOESTADOSIDENCOMENDA, max(TIPOESTADOSIDESTADODIVERSO) as idEstado FROM TIPOESTADOS
-/*WHERE TIPOESTADOSIDESTADODIVERSO < 4*/
-GROUP BY TIPOESTADOSIDENCOMENDA
-ORDER BY TIPOESTADOSDATAHORA DESC
-
-/*  SELECIONAR DETALHES */
-SELECT * FROM mostraDetalhes WHERE idEncomenda=4
-SELECT COUNT(*) FROM mostraDetalhes
-SELECT * FROM mostraDetalhes
-
-
-SELECT m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, d.detalheEncomendaIDEncomenda as idEncomenda, e.encomendasDataHora as dataHora, de.diversosEstadosNome as estado, te.tipoEstadosIDEstadoDiverso as idEstado
-FROM detalheEncomenda d, menu m, encomendas e, diversosEstados de, tipoEstados te
-WHERE d.detalheEncomendaRefPrato = m.menuRefPrato and d.detalheEncomendaIDEncomenda = e.encomendasIDEncomenda and tipoEstadosIDEstado = d.detalheEncomendaIDEncomenda and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
-
-SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes
 
 DROP VIEW materiaisPrato
 
@@ -658,13 +631,10 @@ FROM menuMateriais mm, materiaPrima mp, menu m
 WHERE m.menuRefPrato =  menumateriaisrefprato and  mp.materiaPrimaRefProduto = menumateriaisrefproduto
 ORDER BY m.menuRefPrato
 
-SELECT * FROM materiaisPrato
-
-SELECT * FROM materiaisPrato WHERE idPrato = 1
-
-SELECT * FROM detalheEncomenda
-
-SELECT * FROM menu
-SELECT * FROM encomendas
-SELECT * FROM tipoEstados
+/*********************************************************************************
+                                    COMMIT  
+**********************************************************************************/
 COMMIT
+
+
+
