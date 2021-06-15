@@ -89,7 +89,7 @@ public class pedidos {
                         if (n == JOptionPane.YES_OPTION) {
                             encomendaCliente.updateEstado(data[linha][0], 1, 3);
                             String[][] data = encomendaCliente.readAll();
-                            table1.updateUI();
+                            updateTable();
                         }
                     }
                 }

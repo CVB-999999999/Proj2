@@ -624,14 +624,19 @@ CREATE VIEW mostraDetalhes AS
         and de.diversosEstadosIDESTADO = te.tipoEstadosIDEstadoDiverso AND te.tipoEstadosIDEstadoDiverso > 0 AND te.tipoEstadosIDEstadoDiverso < 4
     ORDER BY te.tipoEstadosIDEstadoDiverso DESC
 
-
+drop view mostraDetalhes1
 
 CREATE VIEW mostraDetalhes1 AS
 SELECT e.ENCOMENDASIDENCOMENDA as idEncomenda, m.menuNome as menu, d.detalheEncomendaPreco as preco, d.detalheEncomendaQuantidade as quantidade, e.encomendasDataHora as dataHora, sub.idEstado
-from encomendas e,  menu m, detalheEncomenda d, (SELECT TIPOESTADOSIDENCOMENDA, TIPOESTADOSIDESTADODIVERSO as idEstado FROM TIPOESTADOS ORDER BY TIPOESTADOSDATAHORA DESC) sub
-where d.detalheEncomendaRefPrato = m.menuRefPrato AND d.DetalheEncomendaIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.TIPOESTADOSIDENCOMENDA = e.ENCOMENDASIDENCOMENDA
+from encomendas e,  menu m, detalheEncomenda d, (SELECT TIPOESTADOSIDENCOMENDA, max(TIPOESTADOSIDESTADODIVERSO) as idEstado FROM TIPOESTADOS GROUP BY TIPOESTADOSIDENCOMENDA) sub
+where d.detalheEncomendaRefPrato = m.menuRefPrato AND d.DetalheEncomendaIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.TIPOESTADOSIDENCOMENDA = e.ENCOMENDASIDENCOMENDA AND sub.idEstado < 4
 
+commit
 
+SELECT TIPOESTADOSIDENCOMENDA, max(TIPOESTADOSIDESTADODIVERSO) as idEstado FROM TIPOESTADOS
+/*WHERE TIPOESTADOSIDESTADODIVERSO < 4*/
+GROUP BY TIPOESTADOSIDENCOMENDA
+ORDER BY TIPOESTADOSDATAHORA DESC
 
 /*  SELECIONAR DETALHES */
 SELECT * FROM mostraDetalhes WHERE idEncomenda=4

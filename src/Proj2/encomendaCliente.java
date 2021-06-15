@@ -138,7 +138,7 @@ public class encomendaCliente {
         /*String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
         String count = "SELECT COUNT(*) as n FROM mostraDetalhes";*/
 
-        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes1";
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, idEstado FROM mostraDetalhes1";
         String count = "SELECT COUNT(*) as n FROM mostraDetalhes1";
 
         String[][] encomenda = new String[0][];
@@ -167,10 +167,25 @@ public class encomendaCliente {
                 if (rs.getString("datahora") != null) {
                     encomenda[i][3] = (rs.getString("datahora"));
                 }
-                if (rs.getString("estado") != null) {
-                    encomenda[i][4] = (rs.getString("estado"));
+                /*if (rs.getString("idEstado") != null) {
+                    encomenda[i][4] = (rs.getString("idEstado"));
+                }*/
+                switch(rs.getInt("idEstado")){
+                    case 1: {
+                        encomenda[i][4] = "Pendente";
+                        break;
+                    }
+                    case 2: {
+                        encomenda[i][4] = "Confirmado";
+                        break;
+                    }
+                    case 3: {
+                        encomenda[i][4] = "Em preparação";
+                        break;
+                    }
                 }
-                i++;
+
+               i++;
             }
 
         } catch (SQLException ex) {
