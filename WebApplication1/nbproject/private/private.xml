@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/src/java/proj2/web/ClienteController.java</file>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/web/WEB-INF/dispatcher-servlet.xml</file>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/src/java/hibernate.cfg.xml</file>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/web/WEB-INF/jsp/cliente.jsp</file>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/src/java/hibernateCliente.xml</file>
-            <file>file:/C:/Users/carlo/Documents/NetBeansProjects/WebApplication1/web/WEB-INF/jsp/index.jsp</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documentos/GitHub/Proj2/WebApplication1/src/java/proj2/web/ClienteController.java</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documentos/GitHub/Proj2/WebApplication1/src/java/proj2/web/estafetaController.java</file>
+            <file>file:/C:/Users/pedro/OneDrive/Documentos/GitHub/Proj2/WebApplication1/web/WEB-INF/jsp/index.jsp</file>
         </group>
     </open-files>
 </project-private>
