@@ -17,8 +17,8 @@ public class ClienteController extends AbstractController{
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,HttpServletResponse response)throws Exception{
     
-        String[][] books = cliente.readAll();
-        //String books = "1";
+        //String[][] books = cliente.readAll();
+        String books = "1";
         return new ModelAndView("cliente", "books", books);
     }
 }
