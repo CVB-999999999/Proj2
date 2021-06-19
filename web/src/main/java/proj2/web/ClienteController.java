@@ -1,6 +1,8 @@
 package proj2.web;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ClienteController {
@@ -36,5 +38,36 @@ public class ClienteController {
         cli[2] = c.getCodPostal();
 
         return cli;
+    }
+
+    @GetMapping("/listC")
+    public String[][] getCustomers() {
+        return cliente.readAll();
+    }
+
+    @GetMapping("/teste")
+    public ModelAndView getTest() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        mv.getModel().put("data", "123Teste");
+        return mv;
+    }
+
+    @RequestMapping (value = "message", method = RequestMethod.GET)
+    public ModelAndView messages() {
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("messages", "cenas");
+        return mav;
+    }
+
+    /*@RequestMapping("/")
+    public ModelAndView welcome(ModelMap model) {
+        model.addAttribute("teste", "Programmer Gate");
+        return model;
+    }*/
+
+    @RequestMapping("/")
+    public ModelAndView cenas () {
+        return new ModelAndView("indeex", "books", "books");
     }
 }
