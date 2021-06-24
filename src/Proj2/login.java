@@ -19,7 +19,7 @@ public class login {
     private int codigo = 0;
 
     public login() {
-        JFrame frame = new JFrame("Página de Login");
+        JFrame frame = new JFrame("Iniciar Sessão");
 
         frame.setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("../assets/ve-logo-40x40.png")));
 
@@ -70,7 +70,7 @@ public class login {
                         break;
                     }
                     default:
-                        System.out.println("Erro");
+                        System.out.println("Erro Desconhecido");
                 }
             }
         });
