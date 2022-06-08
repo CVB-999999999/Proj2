@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ingredientes {
@@ -76,13 +77,13 @@ public class ingredientes {
     /**
      * <h1> Ler todos os registos de ingredientes </h1>
      *
-     * @return lista - 1 : Ref Produto - 2 : Nome Produto
+     * @return lista com: | 1 : Ref Produto | 2 : Nome Produto
      */
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
         String[][] lista = new String[0][4];
 
-        String sqlCommand = "SELECT materiaPrimaRefProduto, materiaPrimaNome FROM materiaPrima";
+        String sqlCommand = "SELECT materiaPrimaRefProduto, materiaPrimaNome, materiaPrimaQuantidadeAtual, materiaPrimaQuantidadeMinima,materiaPrimaDataHoraVerificacao FROM materiaPrima";
         String count = "SELECT COUNT(*) as n FROM materiaPrima";
 
         try {
@@ -93,7 +94,7 @@ public class ingredientes {
             ss.next();
             int n = ss.getInt("n");
 
-            lista = new String[n][2];
+            lista = new String[n][5];
             ResultSet rs = st.executeQuery();
 
             int i = 0;
@@ -104,10 +105,58 @@ public class ingredientes {
                 if (rs.getString("materiaPrimaNome") != null) {
                     lista[i][1] = (rs.getString("materiaPrimaNome"));
                 }
+                if (rs.getString("materiaPrimaQuantidadeAtual") != null) {
+                    lista[i][2] = (rs.getString("materiaPrimaQuantidadeAtual"));
+                }
+                if (rs.getString("materiaPrimaQuantidadeMinima") != null) {
+                    lista[i][3] = (rs.getString("materiaPrimaQuantidadeMinima"));
+                }
+                if (rs.getString("materiaPrimaDataHoraVerificacao") != null) {
+                    lista[i][4] = (rs.getString("materiaPrimaDataHoraVerificacao"));
+                }
+
                 i++;
             }
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
+        }
+        return lista;
+    }
+
+    /**
+     * <h1> Ler todos os registos de ingredientes de cada prato </h1>
+     *
+     * @param id - id do prato a buscar os ingredientes
+     * @return lista - 1 : Ref Produto - 2 : Nome Produto
+     */
+    public static ArrayList<String[]> readIngPrato(int id) {
+        Connection conn = util.criarConexao();
+        ArrayList<String[]> lista = new ArrayList<>();
+
+        String sqlCommand = "SELECT idProduto, nomeProduto, quantidade FROM materiaisPrato WHERE idPrato = ?";
+
+        try {
+            PreparedStatement st = conn.prepareStatement(sqlCommand);
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String[] aux = new String[3];
+
+                if (rs.getString("idProduto") != null) {
+                    aux[0] = (rs.getString("idProduto"));
+                }
+                if (rs.getString("nomeProduto") != null) {
+                    aux[1] = (rs.getString("nomeProduto"));
+                }
+                if (rs.getString("quantidade") != null) {
+                    aux[2] = (rs.getString("quantidade"));
+                }
+                lista.add(aux);
+            }
+        } catch (SQLException ex) {
+            System.out.println("ERRO - readIngPrato: " + ex.getMessage());
         }
         return lista;
     }
@@ -131,6 +180,30 @@ public class ingredientes {
 
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * <h1> Update ingrediente</h1>
+     */
+
+    public static void updateIngrediente(int idProduto, int qtdAtual, int qtdMin) {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "UPDATE materiaPrima SET materiaPrimaQuantidadeAtual=?, materiaPrimaQuantidadeMinima=?, materiaPrimaDataHoraVerificacao=(select sysdate from dual) WHERE materiaPrimaRefProduto=?";
+
+        try {
+            PreparedStatement st1 = conn.prepareStatement(sqlCommand);
+
+            st1.setInt(1, qtdAtual);
+            st1.setInt(2, qtdMin);
+            st1.setInt(3, idProduto);
+
+            st1.execute();
+            conn.commit();
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO updateEstado: " + ex.getMessage());
         }
     }
 }

@@ -1,12 +1,7 @@
 package Proj2;
 
 import java.sql.*;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class encomendaCliente {
     private int refPrato;
@@ -97,34 +92,41 @@ public class encomendaCliente {
 
     /**
      * <h1> Ler a BD </h1>
-     *//*
-    public void read(int idCliente1){
+     * @return
+     */
+    public String[] read(int idEncomenda){
         Connection conn = util.criarConexao();
+        String[] encomenda = new String[5];
 
-        //String sqlCommand = "SELECT CLIENTENOME, CLIENTEENDERECOLINHA1, CLIENTECODIGOPOSTAL FROM CLIENTE WHERE CLIENTENCLIENTE = ?";
-        String sqlCommand = "SELECT * FROM CLIENTE WHERE CLIENTENCLIENTE = ?";
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes WHERE idEncomenda = ?";
 
         try {
             PreparedStatement st = conn.prepareStatement(sqlCommand);
-            st.setInt(1, idCliente1);
+            st.setInt(1, idEncomenda);
 
             ResultSet rs = st.executeQuery();
 
-            if(rs.next()){
-                this.idCliente = idCliente1;
-                if (rs.getString("CLIENTENOME") != null) this.nome = rs.getString("CLIENTENOME");
-                else this.nome = "";
-                if (rs.getString("CLIENTEENDERECOLINHA1") != null) this.rua = rs.getString("CLIENTEENDERECOLINHA1");
-                else this.rua = "";
-                if (rs.getString("CLIENTECODIGOPOSTAL") != null) this.codPostal = rs.getString("CLIENTECODIGOPOSTAL");
-                else this.codPostal = "";
-            }
-            else{
-                System.out.println("ERRO: Não existe Cliente com o ID definido ");
+            while (rs.next()) {
+
+                encomenda[0] = (rs.getString("idEncomenda"));
+
+                if (rs.getString("menu") != null) {
+                    encomenda[1] = (rs.getString("menu"));
+                }
+                if (rs.getString("quantidade") != null) {
+                    encomenda[2] = String.valueOf((rs.getInt("quantidade")));
+                }
+                if (rs.getString("datahora") != null) {
+                    encomenda[3] = (rs.getString("datahora"));
+                }
+                if (rs.getString("estado") != null) {
+                    encomenda[4] = (rs.getString("estado"));
+                }
             }
         } catch (SQLException ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
+        return encomenda;
     }
 
     /**
@@ -133,8 +135,11 @@ public class encomendaCliente {
     public static String[][] readAll() {
         Connection conn = util.criarConexao();
 
-        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
-        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";
+        /*String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, estado FROM mostraDetalhes";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes";*/
+
+        String sqlCommand = "SELECT idEncomenda, menu, quantidade, datahora, idEstado FROM mostraDetalhes1";
+        String count = "SELECT COUNT(*) as n FROM mostraDetalhes1";
 
         String[][] encomenda = new String[0][];
         try {
@@ -146,7 +151,6 @@ public class encomendaCliente {
             ss.next();
             int n = ss.getInt("n");
 
-            n=100;
             ResultSet rs = st.executeQuery();
             encomenda = new String[n][6];
             int i = 0;
@@ -163,10 +167,25 @@ public class encomendaCliente {
                 if (rs.getString("datahora") != null) {
                     encomenda[i][3] = (rs.getString("datahora"));
                 }
-                if (rs.getString("estado") != null) {
-                    encomenda[i][4] = (rs.getString("estado"));
+                /*if (rs.getString("idEstado") != null) {
+                    encomenda[i][4] = (rs.getString("idEstado"));
+                }*/
+                switch(rs.getInt("idEstado")){
+                    case 1: {
+                        encomenda[i][4] = "Pendente";
+                        break;
+                    }
+                    case 2: {
+                        encomenda[i][4] = "Confirmado";
+                        break;
+                    }
+                    case 3: {
+                        encomenda[i][4] = "Em preparação";
+                        break;
+                    }
                 }
-                i++;
+
+               i++;
             }
 
         } catch (SQLException ex) {
@@ -197,6 +216,7 @@ public class encomendaCliente {
 
             st1.execute();
             conn.commit();
+            System.out.println("Estado updated");
 
         } catch (SQLException ex) {
             System.out.println("ERRO updateEstado: " + ex.getMessage());

@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class modMenuUI {
     private JButton cancelarButton;
@@ -17,17 +18,26 @@ public class modMenuUI {
     private JTextField textField3;
     private JButton adicionarIngredienteButton;
     private JPanel panel;
-    private String[][] data;
+    private JLabel idPrato;
+    private ArrayList<String[]> data;
     private String[][] ingr;
     private DefaultTableModel model = new DefaultTableModel();
-    JFrame frame = new JFrame();
+    JFrame frame = new JFrame("Lista");
 
-    public modMenuUI() {
+    public modMenuUI(int id, String nome, String preco, String descricao) {
+
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        textField1.setText(nome);
+        textField2.setText(preco);
+        textField3.setText(descricao);
+        idPrato.setText(String.valueOf(id));
 
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
@@ -35,15 +45,15 @@ public class modMenuUI {
 
         model.addColumn("Referencia Ingrediente");
         model.addColumn("Nome Ingrediente");
-        model.addColumn("Preco");
         model.addColumn("Quantidade");
 
-        data = menu.readAll();
+        data = ingredientes.readIngPrato(id);
+        System.out.println(id);
         ingr = ingredientes.readAll();
 
         int i=0;
-        for (i=0 ; i<data.length ; i++) {
-            model.addRow(data[i]);
+        for (i=0 ; i<data.size() ; i++) {
+            model.addRow(data.get(i));
         }
 
         // Cria um array com todos os ingredientes que o utilizador pode adicionar ao menu
@@ -68,6 +78,7 @@ public class modMenuUI {
                         options[0]);
                 //  Guardar as alterações e sair
                 if(n == JOptionPane.YES_OPTION) {
+                    saveChanges();
                     frame.setVisible(false);
                     frame.dispose();
                 }
@@ -83,6 +94,7 @@ public class modMenuUI {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                saveChanges();
                 frame.setVisible(false);
                 frame.dispose();
             }
@@ -105,6 +117,37 @@ public class modMenuUI {
                 // add ao array de ingredientes e so no fim guardar na bd
                 if ((s != null) && (s.length() > 0)) {
                     System.out.println(s);
+                    int j;
+                    int num = 0;
+                    for (j=0 ; j<ingr.length ; j++) {
+                        if(s.compareToIgnoreCase(ingr[j][1])==0) {
+                            for (int h = 0 ; h < data.size() ; h++) {
+                                if(data.get(h)[1].compareToIgnoreCase(s) == 0) {
+                                    String[] aux = new String[3];
+                                    aux[0] = ingr[j][0];
+                                    aux[1] = ingr[j][1];
+                                    num = Integer.parseInt(data.get(h)[2]) + 1;
+                                    aux[2] = String.valueOf(num);
+
+                                    data.set(h, aux);
+                                    update();
+                                    break;
+                                }
+                            }
+
+                            if(num == 0) {
+                                String[] aux = new String[3];
+                                aux[0] = ingr[j][0];
+                                aux[1] = ingr[j][1];
+                                aux[2] = "1";
+
+                                data.add(aux);
+
+                                update();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -115,7 +158,7 @@ public class modMenuUI {
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
 
-                    int value = Integer.parseInt(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+                    int value = table1.getSelectedRow();
                     System.out.println(value);
 
                     Object[] options = {"Alterar quantidade", "Remover", "Cancelar"};
@@ -129,12 +172,67 @@ public class modMenuUI {
                             options[0]);
                     //  Alterar a qtd do ingrediente
                     if(n == JOptionPane.YES_OPTION) {
+                        System.out.println(data.get(value)[0]);
+
+                        String s;
+                        int num = Integer.parseInt(data.get(value)[2]);
+                        do {
+                            s = (String) JOptionPane.showInputDialog(
+                                    frame,
+                                    "Introduza a nova quantidade:",
+                                    "Alterar quantidade",
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null,
+                                    null,
+                                    null);
+                            s = s.trim();
+                            // Converte a String para Int
+                            try {
+                                num = Integer.parseInt(s);
+                            } catch (Exception e) {
+                                System.out.println("Foi introduzido um caracter na String, quando deveriam ser apenas introduzidos numeros");
+                            }
+                        } while(num < 0);
+
+                        System.out.println(num);
+
+                        String[] aux = new String[3];
+                        aux[0] = data.get(value)[0];
+                        aux[1] = data.get(value)[1];
+                        aux[2] = String.valueOf(num);
+
+                        data.set(value, aux);
+                        update();
+                        System.out.println(data.get(value)[2]);
                     }
                     //  Remover o ingrediente
                     if(n == JOptionPane.NO_OPTION) {
+                        data.remove(value);
+                        update();
                     }
                 }
             }
         });
+    }
+    public void update() {
+        model.setNumRows(0);
+
+        int i=0;
+        for (i=0 ; i<data.size() ; i++) {
+            model.addRow(data.get(i));
+        }
+        table1.setModel(model);
+    }
+
+    public void saveChanges() {
+        String nome = textField1.getText();
+        String preco = textField2.getText();
+        String descri = textField3.getText();
+
+        // TO DO
+        // UPDATE PRATO com dados novos
+        // UPDATE / INSERT INGREDIENTES
+
+        System.out.println("Exit and Save");
     }
 }

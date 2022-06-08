@@ -19,7 +19,10 @@ public class login {
     private int codigo = 0;
 
     public login() {
-        JFrame frame = new JFrame("login");
+        JFrame frame = new JFrame("Página de Login");
+
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("../assets/ve-logo-40x40.png")));
+
         JFrame.setDefaultLookAndFeelDecorated(false);
         frame.setContentPane(login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,20 +47,26 @@ public class login {
                 System.out.println(id + pass);
 
                 codigo = f.login( id, pass);
+                System.out.println(codigo);
 
                 switch (codigo) {
                     case 2: {
-                        erro.setText("O ID do Funcionario não foi encontrado");
+                        erro.setText("O ID do Funcionario não foi encontrado ou a palavra passe está errada");
                         break;
                     }
                     case 1: {
+
                         erro.setForeground(Color.GREEN);
                         erro.setText("Sucesso");
 
-                        menuPrincipal mp = new menuPrincipal();
+                        menuPrincipal mp = new menuPrincipal(f.getFuncao());
                         frame.setVisible(false);
                         frame.dispose();
 
+                        break;
+                    }
+                    case 3:{
+                        erro.setText("Este Funcionario encontra-se demitido. Contacte o Gerente");
                         break;
                     }
                     default:

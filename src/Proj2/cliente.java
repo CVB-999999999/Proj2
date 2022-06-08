@@ -152,11 +152,55 @@ public class cliente {
 
     /**
      * <h1> Ler todos os registos de clientes </h1>
-     *//*
+     */
+    public static String[][] readAll() {
+        Connection conn = util.criarConexao();
+
+        String sqlCommand = "SELECT clienteNCliente, clienteNome, clienteEmail, clienteTelemovel FROM cliente";
+        String count = "SELECT COUNT(*) as n FROM cliente";
+
+        String[][] cliente = new String[0][];
+        try {
+            PreparedStatement st = conn.prepareStatement(sqlCommand);
+
+            //  Conta as linhas que vao resultar da query
+            PreparedStatement ts = conn.prepareStatement(count);
+            ResultSet ss = ts.executeQuery();
+            ss.next();
+            int n = ss.getInt("n");
+
+            n=100;
+            ResultSet rs = st.executeQuery();
+            cliente = new String[n][4];
+            int i = 0;
+            while (rs.next()) {
+
+
+                cliente[i][0] = (rs.getString("clienteNCliente"));
+
+                if (rs.getString("clienteNome") != null) {
+                    cliente[i][1] = (rs.getString("clienteNome"));
+                }
+                if (rs.getString("clienteEmail") != null) {
+                    cliente[i][2] = (rs.getString("clienteEmail"));
+                }
+                if (rs.getString("clienteTelemovel") != null) {
+                    cliente[i][3] = (rs.getString("clienteTelemovel"));
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("ERRO: " + ex.getMessage());
+        }
+
+        return cliente;
+    }
+    /*
     public static List<Cliente> readAll(){
         Connection conn = Util.criarConexao();
 
-        String sqlCommand = "SELECT IDCLIENTE, NOME, MORADA, CPOSTAL FROM CLIENTE1";
+        String sqlCommand = "";
 
         List<Cliente> lista = new ArrayList<>();
 
@@ -169,12 +213,12 @@ public class cliente {
             while(rs.next()){
                 Cliente cli = new Cliente();
 
-                cli.setIdCliente(rs.getInt("IDCLIENTE"));
-                if (rs.getString("NOME") != null) cli.setNome(rs.getString("NOME"));
+                cli.setIdCliente(rs.getInt("clienteNCliente"));
+                if (rs.getString("clienteNome") != null) cli.setNome(rs.getString("clienteNome"));
                 //
-                if (rs.getString("MORADA") != null) cli.setMorada(rs.getString("MORADA"));
+                if (rs.getString("clienteEmail") != null) cli.setEmail(rs.getString("clienteEmail"));
                 //
-                if (rs.getString("CPOSTAL") != null) cli.setCpostal(rs.getString("CPOSTAL"));
+                if (rs.getString("clienteTelemovel") != null) cli.setTelemovel(rs.getString("clienteTelemovel"));
 
                 lista.add(cli);
             }
@@ -184,7 +228,7 @@ public class cliente {
         }
 
         return lista;
-    }
+    }*/
 
     /**
      * <h1> Ler todos os registos de clientes parecidos com x </h1>

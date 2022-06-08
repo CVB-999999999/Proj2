@@ -1,0 +1,28 @@
+#banner{
+    background: rgb(160,36,128);
+    background: linear-gradient(19deg, rgba(160,36,128,1) 0%, rgba(214,119,15,1) 88%);
+    color: black;
+}
+
+.promo-title{
+    font-size: 50px;
+    font-weight: 600;
+    margin-top: 100px;
+    font-family: 'Roboto', sans-serif;
+}
+.bottom-img{
+    width: 100%;
+}
+
+.logo-img{
+    height: 60px;
+    width: auto;
+    margin-top: 50px;
+}
+
+.carrinho-icon{
+    color: black;
+}
+.carrinho-icon:hover{
+    color: #009900;
+}

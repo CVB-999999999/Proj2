@@ -14,12 +14,21 @@
             <preferred-size width="-1" height="20"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <borderPainted value="false"/>
+          <enabled value="true"/>
+          <floatable value="false"/>
+          <opaque value="false"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="cf6c1" class="javax.swing.JLabel">
             <constraints/>
             <properties>
+              <font size="22"/>
+              <icon value="assets/ve-logo-40x40.png"/>
+              <maximumSize width="150" height="50"/>
+              <minimumSize width="150" height="50"/>
               <text value="Funcionarios"/>
             </properties>
           </component>
@@ -34,14 +43,19 @@
           </component>
         </children>
       </toolbar>
-      <component id="9f38a" class="javax.swing.JTable" binding="table1" default-binding="true">
+      <scrollpane id="6976d">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="50"/>
-          </grid>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="9f38a" class="javax.swing.JTable" binding="table1" default-binding="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

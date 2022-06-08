@@ -16,15 +16,16 @@ public class menuUI {
     private JButton adicionarPratoButton;
     private String[][] data;
     private DefaultTableModel model = new DefaultTableModel();
-    JFrame frame = new JFrame();
+    JFrame frame = new JFrame("Lista de Pratos");
 
     public menuUI() {
         JFrame.setDefaultLookAndFeelDecorated(false);
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(menuPrincipal.class.getResource("../assets/ve-logo-40x40.png")));
+
         frame.setContentPane(menusPratos);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
         table1.setAutoCreateRowSorter(true);
         table1.setFillsViewportHeight(true);
         table1.setPreferredScrollableViewportSize(new Dimension(550, 200));
@@ -50,12 +51,37 @@ public class menuUI {
             }
         });
 
+        // Criar prato, cria um prato com apenas o nome e o user depois tem de alterar o prato
+        adicionarPratoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = (String)JOptionPane.showInputDialog(
+                        frame,
+                        "Escolha o nome do Prato: ",
+                        "Adicionar Prato",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        null,
+                        null);
+
+                // INSERT na DB o prato vazio
+                if ((s != null) && (s.length() > 0)) {
+                    menu m = new menu();
+                    m.create(s);
+
+                    System.out.println("Criado prato: " + s);
+                    updateTable();
+                }
+            }
+        });
+
         table1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (table1.getSelectedRow() > -1) {
                     // print first column value from selected row
                     System.out.println(table1.getValueAt(table1.getSelectedRow(), 0).toString());
+
                     int value = table1.getSelectedRow();
 
                     Object[] options = {"Alterar", "Remover", "Cancelar"};
@@ -69,7 +95,7 @@ public class menuUI {
                             options[0]);
                     //  Alterar o prato
                     if(n == JOptionPane.YES_OPTION) {
-                        modMenuUI mod = new modMenuUI();
+                        modMenuUI mod = new modMenuUI(Integer.parseInt(data[value][0]), data[value][1], data[value][2], data[value][3]);
                     }
                     //  Remover o prato
                     if(n == JOptionPane.NO_OPTION) {
